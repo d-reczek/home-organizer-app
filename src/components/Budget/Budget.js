@@ -139,6 +139,10 @@ export const Budget = () => {
           maxWidth: "1600px",
           justifyContent: "center",
           gap: "20px",
+          backgroundColor: Theme.palette.secondary.main,
+          padding: "30px",
+          margin: "20px",
+          boxSizing: "border-box",
         }}>
         <div
           style={{
@@ -162,7 +166,7 @@ export const Budget = () => {
               fontSize: "30px",
               padding: "1.5rem",
               alignSelf: "center",
-              backgroundColor: theme.palette.secondary.main,
+              backgroundColor: Theme.palette.backgroundColor.main,
               textAlign: "center",
             }}>
             {chosenMoneyOperations === "expenses"

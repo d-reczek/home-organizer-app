@@ -26,7 +26,7 @@ const NewExpenseContainer = styled.div`
   margin-top: 10px;
   padding: 10px;
   flex-wrap: wrap;
-  background-color: ${Theme.palette.secondary.main};
+  background-color: ${Theme.palette.backgroundColor.main};
   color: ${Theme.palette.secondary.contrastText};
 `;
 
