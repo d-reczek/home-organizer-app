@@ -6,15 +6,15 @@ import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { Theme } from "../common/theme/theme";
-import logo from "./home.png";
 import { getAuth, signOut } from "firebase/auth";
 import { useContext } from "react";
 import { UserContext } from "../userContext/UserContext";
 import { NavigationButton } from "./NavigationButton";
 import styled from "@emotion/styled";
-import { useMediaQuery } from "@mui/material";
+import { Icon, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
+import HomeIcon from "@mui/icons-material/Home";
 const ButtonsContainer = styled.div`
   flex-grow: 1;
   display: flex;
@@ -65,13 +65,25 @@ export const Navigation = () => {
           sx={{ flexDirection: maxWidth1000 ? "column" : "" }}
           disableGutters>
           <IconButton key="icon-button">
-            <Avatar
+            {/* <Avatar
               alt="home"
               variant="square"
               src={logo}
               component={Link}
               to="/"
-            />
+            /> */}
+            <Button
+              sx={{
+                color: Theme.palette.secondary.contrastText,
+                ":hover": { color: Theme.palette.primary.contrastText },
+              }}
+              color="secondary"
+              alt="home"
+              variant="square"
+              component={Link}
+              to="/">
+              <Icon>home</Icon>
+            </Button>
           </IconButton>
           {navItems.map(
             item =>
@@ -184,13 +196,18 @@ export const Navigation = () => {
                 sx={{ flexDirection: maxWidth1000 ? "column" : "" }}
                 disableGutters>
                 <IconButton>
-                  <Avatar
+                  <Button
+                    sx={{
+                      color: Theme.palette.secondary.contrastText,
+                      ":hover": { color: Theme.palette.primary.contrastText },
+                    }}
+                    color="secondary"
                     alt="home"
                     variant="square"
-                    src={logo}
                     component={Link}
-                    to="/"
-                  />
+                    to="/">
+                    <Icon>home</Icon>
+                  </Button>
                 </IconButton>
                 {navItems.map(
                   item =>
@@ -198,16 +215,6 @@ export const Navigation = () => {
                 )}
                 {user ? (
                   <ButtonsContainer>
-                    <Avatar
-                      variant="square"
-                      src={avatarUrl}
-                      alt="avatar"
-                      sx={{
-                        marginRight: "10px",
-                        backgroundColor: "black",
-                        padding: "1px",
-                      }}
-                    />
                     <Button
                       sx={{
                         margin: "2px",
