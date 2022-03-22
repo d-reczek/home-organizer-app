@@ -131,6 +131,10 @@ function IncomesList({ uid, incomes, onDelete, firestore, widthEditInput }) {
                             id={income.id}
                           />
                           <CancelButton handleClickCancel={handleClickCancel} />
+                          <DeleteButton
+                            handleClickOpen={handleClickOpen}
+                            id={income.id}
+                          />
                         </ListItemContainer>
                       ) : (
                         <ListItemContainer>
@@ -141,13 +145,12 @@ function IncomesList({ uid, incomes, onDelete, firestore, widthEditInput }) {
                           <ListItemElement>
                             {dayjs(income.date).format("D MMMM")}
                           </ListItemElement>
-
-                          <DeleteButton
-                            handleClickOpen={handleClickOpen}
-                            id={income.id}
-                          />
                           <EditButton
                             handleClickEdit={handleClickEdit}
+                            id={income.id}
+                          />
+                          <DeleteButton
+                            handleClickOpen={handleClickOpen}
                             id={income.id}
                           />
                         </ListItemContainer>

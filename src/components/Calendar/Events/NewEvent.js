@@ -305,6 +305,11 @@ const NewEvent = ({ items, setItems, firestore }) => {
                   <SaveButton handleClickSave={handleClickSave} id={element.id}>
                     <Icon>save</Icon>
                   </SaveButton>
+                  <DeleteButton
+                    handleClickOpen={handleClickOpen}
+                    id={element.id}>
+                    <Icon>delete</Icon>
+                  </DeleteButton>
                 </>
               )}
               {isEditing && element.id !== eventID && (

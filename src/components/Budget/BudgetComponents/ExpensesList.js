@@ -138,6 +138,10 @@ function ExpensesList({ uid, expenses, onDelete, firestore, widthEditInput }) {
                             id={expense.id}
                           />
                           <CancelButton handleClickCancel={handleClickCancel} />
+                          <DeleteButton
+                            handleClickOpen={handleClickOpen}
+                            id={expense.id}
+                          />
                         </ListItemContainer>
                       ) : (
                         <ListItemContainer>
@@ -148,13 +152,12 @@ function ExpensesList({ uid, expenses, onDelete, firestore, widthEditInput }) {
                           <ListItemElement>
                             {dayjs(expense.date).format("D MMMM")}
                           </ListItemElement>
-
-                          <DeleteButton
-                            handleClickOpen={handleClickOpen}
-                            id={expense.id}
-                          />
                           <EditButton
                             handleClickEdit={handleClickEdit}
+                            id={expense.id}
+                          />
+                          <DeleteButton
+                            handleClickOpen={handleClickOpen}
                             id={expense.id}
                           />
                         </ListItemContainer>
