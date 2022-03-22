@@ -31,9 +31,10 @@ const NewIncomeContainer = styled.div`
 const ListItemElement = styled.span`
   padding: 10px;
   width: 7rem;
+  flex-grow: 1;
 `;
-
 const ListItemContainer = styled.div`
+  width: 100%;
   gap: 5px;
   display: flex;
   flex-wrap: wrap;
@@ -131,6 +132,10 @@ function IncomesList({ uid, incomes, onDelete, firestore, widthEditInput }) {
                             id={income.id}
                           />
                           <CancelButton handleClickCancel={handleClickCancel} />
+                          <DeleteButton
+                            handleClickOpen={handleClickOpen}
+                            id={income.id}
+                          />
                         </ListItemContainer>
                       ) : (
                         <ListItemContainer>
@@ -141,13 +146,12 @@ function IncomesList({ uid, incomes, onDelete, firestore, widthEditInput }) {
                           <ListItemElement>
                             {dayjs(income.date).format("D MMMM")}
                           </ListItemElement>
-
-                          <DeleteButton
-                            handleClickOpen={handleClickOpen}
-                            id={income.id}
-                          />
                           <EditButton
                             handleClickEdit={handleClickEdit}
+                            id={income.id}
+                          />
+                          <DeleteButton
+                            handleClickOpen={handleClickOpen}
                             id={income.id}
                           />
                         </ListItemContainer>

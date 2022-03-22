@@ -33,8 +33,10 @@ const NewExpenseContainer = styled.div`
 const ListItemElement = styled.span`
   padding: 10px;
   width: 7rem;
+  flex-grow: 1;
 `;
 const ListItemContainer = styled.div`
+  width: 100%;
   gap: 5px;
   display: flex;
   flex-wrap: wrap;
@@ -138,6 +140,10 @@ function ExpensesList({ uid, expenses, onDelete, firestore, widthEditInput }) {
                             id={expense.id}
                           />
                           <CancelButton handleClickCancel={handleClickCancel} />
+                          <DeleteButton
+                            handleClickOpen={handleClickOpen}
+                            id={expense.id}
+                          />
                         </ListItemContainer>
                       ) : (
                         <ListItemContainer>
@@ -148,13 +154,12 @@ function ExpensesList({ uid, expenses, onDelete, firestore, widthEditInput }) {
                           <ListItemElement>
                             {dayjs(expense.date).format("D MMMM")}
                           </ListItemElement>
-
-                          <DeleteButton
-                            handleClickOpen={handleClickOpen}
-                            id={expense.id}
-                          />
                           <EditButton
                             handleClickEdit={handleClickEdit}
+                            id={expense.id}
+                          />
+                          <DeleteButton
+                            handleClickOpen={handleClickOpen}
                             id={expense.id}
                           />
                         </ListItemContainer>
