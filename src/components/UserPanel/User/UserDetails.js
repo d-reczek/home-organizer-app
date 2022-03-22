@@ -177,7 +177,7 @@ export const UserDetails = ({ userData, db }) => {
         {userData.map(
           element =>
             element.email === email && (
-              <>
+              <div key={element.id}>
                 <AvatarContainer>
                   <UserAvatar />
                 </AvatarContainer>
@@ -373,7 +373,7 @@ export const UserDetails = ({ userData, db }) => {
                     </>
                   )}
                 </DetailsContainer>
-              </>
+              </div>
             )
         )}
       </FormGroup>

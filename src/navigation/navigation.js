@@ -14,7 +14,6 @@ import styled from "@emotion/styled";
 import { Icon, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
-import HomeIcon from "@mui/icons-material/Home";
 const ButtonsContainer = styled.div`
   flex-grow: 1;
   display: flex;
@@ -211,7 +210,13 @@ export const Navigation = () => {
                 </IconButton>
                 {navItems.map(
                   item =>
-                    user && <NavigationButton to={item.path} item={item} />
+                    user && (
+                      <NavigationButton
+                        key={item.label}
+                        to={item.path}
+                        item={item}
+                      />
+                    )
                 )}
                 {user ? (
                   <ButtonsContainer>

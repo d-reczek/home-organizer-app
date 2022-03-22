@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import AddTaskForm from "./Tasks/AddTaskForm";
 import NewTask from "./Tasks/NewTask";
-
 import Container from "@mui/material/Container";
 import { Theme } from "../../common/theme/theme";
 import { Typography } from "@mui/material";

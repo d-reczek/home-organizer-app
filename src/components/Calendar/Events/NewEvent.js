@@ -223,7 +223,6 @@ const NewEvent = ({ items, setItems, firestore }) => {
                     {dayjs(element.date).format("D MMMM")}
                   </Typography>
                   <Checkbox
-                    type="disabled"
                     sx={{
                       [`&, &.${checkboxClasses.checked}`]: {
                         color: Theme.palette.secondary.contrastText,

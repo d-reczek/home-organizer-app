@@ -99,7 +99,7 @@ function IncomesList({ uid, incomes, onDelete, firestore, widthEditInput }) {
           {incomes.map(
             income =>
               income.uid === uid && (
-                <>
+                <div key={income.id}>
                   <NewIncomeContainer>
                     <ListItem className="incomes" key={income.id}>
                       {income.id === editedTaskId ? (
@@ -154,7 +154,7 @@ function IncomesList({ uid, incomes, onDelete, firestore, widthEditInput }) {
                       )}
                     </ListItem>
                   </NewIncomeContainer>
-                </>
+                </div>
               )
           )}
         </List>
