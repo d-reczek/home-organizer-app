@@ -31,6 +31,7 @@ dayjs.locale("pl");
 const NewEventContainer = styled.div`
   box-sizing: border-box;
   display: flex;
+  flex-wrap: wrap;
   min-height: 2.5rem;
   margin: 0.5rem 0;
   padding: 0.5rem 1rem;

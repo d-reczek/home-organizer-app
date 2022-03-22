@@ -33,8 +33,10 @@ const NewExpenseContainer = styled.div`
 const ListItemElement = styled.span`
   padding: 10px;
   width: 7rem;
+  flex-grow: 1;
 `;
 const ListItemContainer = styled.div`
+  width: 100%;
   gap: 5px;
   display: flex;
   flex-wrap: wrap;

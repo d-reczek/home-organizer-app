@@ -27,6 +27,7 @@ const NewTasksContainer = styled.div`
 
 const NewTaskContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin: 10px;
   padding: 10px;
   background-color: ${Theme.palette.backgroundColor.main};
