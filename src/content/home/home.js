@@ -40,8 +40,10 @@ export const Home = () => {
     fetchUsers();
     fetchTasks();
     fetchEvents();
-    fetchUserEvents();
-    fetchUserTasks();
+    if (user) {
+      fetchUserEvents();
+      fetchUserTasks();
+    }
   }, [user]);
 
   useEffect(() => {
