@@ -100,7 +100,7 @@ function ExpensesList({ uid, expenses, onDelete, firestore, widthEditInput }) {
           {expenses.map(
             expense =>
               expense.uid === uid && (
-                <>
+                <div key={expense.id}>
                   <NewExpenseContainer>
                     <ListItem className="expenses" key={expense.id}>
                       {expense.id === editedTaskId ? (
@@ -161,7 +161,7 @@ function ExpensesList({ uid, expenses, onDelete, firestore, widthEditInput }) {
                       )}
                     </ListItem>
                   </NewExpenseContainer>
-                </>
+                </div>
               )
           )}
         </List>
