@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import styled from "styled-components";
-import { Input, OutlinedInput, Typography } from "@mui/material";
+import { OutlinedInput, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { Theme } from "../../../common/theme/theme";
 import { checkboxClasses } from "@mui/material";
@@ -83,13 +83,13 @@ const NewTask = ({ tasks, db }) => {
 
   //get user uid and email from use context
   const [uid, setUid] = useState("");
-  const { userUID, userEmail } = useContext(UserContext);
+  const { userUID } = useContext(UserContext);
 
   useEffect(() => {
     if (userUID) {
       setUid(userUID);
     }
-  });
+  }, [userUID]);
 
   const [open, setOpen] = useState(false);
 

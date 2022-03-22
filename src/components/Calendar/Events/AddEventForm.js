@@ -4,12 +4,10 @@ import { Theme } from "../../../common/theme/theme";
 
 import {
   Box,
-  Button,
   Checkbox,
   checkboxClasses,
   FormGroup,
   FormHelperText,
-  Icon,
   OutlinedInput,
 } from "@mui/material";
 

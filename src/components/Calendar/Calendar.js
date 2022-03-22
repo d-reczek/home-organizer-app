@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-
 import AddEventForm from "./Events/AddEventForm";
 import NewEvent from "./Events/NewEvent";
 import { PageWrapper } from "../../common/page-wrapper/page-wrapper";
 import { Container, Typography } from "@mui/material";
-
 import { firestore } from "../../firebase";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { useMediaQuery } from "@mui/material";
