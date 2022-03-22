@@ -203,7 +203,6 @@ const NewTask = ({ tasks, db }) => {
                   alignSelf: "center",
                   padding: ".5rem",
                 }}
-                checked={element.alert ? true : false}
                 checked={element.isChecked ? true : false}
                 color="secondary"
                 type="checkbox"
