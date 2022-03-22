@@ -19,7 +19,13 @@ const CalendarList = () => {
   );
 
   useEffect(() => {
-    fetchData();
+    let isMounted = true;
+    if (isMounted) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const fetchData = () => {

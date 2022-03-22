@@ -37,13 +37,19 @@ export const Home = () => {
     });
   };
   useEffect(() => {
-    fetchUsers();
-    fetchTasks();
-    fetchEvents();
-    if (user) {
-      fetchUserEvents();
-      fetchUserTasks();
+    let isMounted = true;
+    if (isMounted) {
+      fetchUsers();
+      fetchTasks();
+      fetchEvents();
+      if (user) {
+        fetchUserEvents();
+        fetchUserTasks();
+      }
     }
+    return () => {
+      isMounted = false;
+    };
   }, [user]);
 
   useEffect(() => {
