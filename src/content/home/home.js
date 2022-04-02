@@ -8,6 +8,27 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { FadeComponent } from "../../common/page-wrapper/FadeComponent";
 import { GrowComponent } from "../../common/page-wrapper/GrowComponent";
+import styled from "styled-components";
+import { Theme } from "../../common/theme/theme";
+
+const TitleContainer = styled.div`
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const HorizontalLine = styled.hr`
+  background-color: ${Theme.palette.primary.contrastText};
+  border-color: ${Theme.palette.primary.contrastText};
+  width: 90%;
+  height: 0.25rem;
+`;
+
 export const Home = () => {
   const { user } = useContext(UserContext);
 
@@ -119,7 +140,6 @@ export const Home = () => {
       surname={surname}
       usersNumber={usersNumber}
       userTasksNumber={userTasksNumber}
-      userEventsNumber={userEventsNumber}
     />
   ) : (
     <Intro
