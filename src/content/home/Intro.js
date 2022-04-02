@@ -21,9 +21,9 @@ import { FadeComponent } from "../../common/page-wrapper/FadeComponent";
 import { GrowComponent } from "../../common/page-wrapper/GrowComponent";
 
 const TitleContainer = styled.div`
+  gap: 20px;
   display: flex;
   flex-wrap: wrap;
-  // min-width: 800px;
   justify-content: center;
   @media (max-width: 1000px) {
     flex-direction: column;
@@ -34,9 +34,8 @@ const TitleContainer = styled.div`
 const HorizontalLine = styled.hr`
   background-color: ${Theme.palette.primary.contrastText};
   border-color: ${Theme.palette.primary.contrastText};
-  width: 70%;
+  width: 90%;
   height: 0.25rem;
-  margin: 1rem;
 `;
 
 export const Intro = ({ usersNumber, tasksNumber, eventsNumber }) => {
