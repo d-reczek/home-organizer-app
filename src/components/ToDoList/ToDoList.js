@@ -8,6 +8,7 @@ import { PageWrapper } from "../../common/page-wrapper/page-wrapper";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { useMediaQuery } from "@mui/material";
+import { FadeComponent } from "../../common/page-wrapper/FadeComponent";
 const ToDoList = () => {
   //firestore configuration
   //add referneces to collection to-do-list and oredered by timestamp
@@ -43,23 +44,25 @@ const ToDoList = () => {
 
   return (
     <PageWrapper>
-      <Typography
-        variant="h3"
-        sx={{ textAlign: "center", marginBottom: "40px" }}>
-        Lista zadań
-      </Typography>
-      <Container
-        maxWidth={maxWidth1000 ? "xl" : "md"}
-        sx={{
-          backgroundColor: Theme.palette.secondary.main,
-          margin: "0 auto",
-          marginTop: "10px",
-        }}>
-        <Container>
-          <AddTaskForm task={task} setTask={setTask} colRef={colRef} />
-          <NewTask tasks={tasks} setTasks={setTasks} db={db} />
+      <FadeComponent>
+        <Typography
+          variant="h3"
+          sx={{ textAlign: "center", marginBottom: "40px" }}>
+          Lista zadań
+        </Typography>
+        <Container
+          maxWidth={maxWidth1000 ? "xl" : "md"}
+          sx={{
+            backgroundColor: Theme.palette.secondary.main,
+            margin: "0 auto",
+            marginTop: "10px",
+          }}>
+          <Container>
+            <AddTaskForm task={task} setTask={setTask} colRef={colRef} />
+            <NewTask tasks={tasks} setTasks={setTasks} db={db} />
+          </Container>
         </Container>
-      </Container>
+      </FadeComponent>
     </PageWrapper>
   );
 };

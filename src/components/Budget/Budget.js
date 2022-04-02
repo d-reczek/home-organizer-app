@@ -23,6 +23,9 @@ import { useContext } from "react";
 import { UserContext } from "../../userContext/UserContext";
 import { Theme } from "../../common/theme/theme";
 import { useMediaQuery } from "@mui/material";
+import { FadeComponent } from "../../common/page-wrapper/FadeComponent";
+import { GrowComponent } from "../../common/page-wrapper/GrowComponent";
+import { GrowComponent2 } from "../../common/page-wrapper/GrowComponent2";
 
 const ListContainer = styled.div`
   display: flex;
@@ -50,13 +53,25 @@ export const Budget = () => {
 
   const widthEditInput = "90px";
   useEffect(() => {
-    if (userUID) {
-      setUid(userUID);
+    let isMounted = true;
+    if (isMounted) {
+      if (userUID) {
+        setUid(userUID);
+      }
     }
+    return () => {
+      isMounted = false;
+    };
   }, [userUID]);
 
   useEffect(() => {
-    fetchData();
+    let isMounted = true;
+    if (isMounted) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const fetchData = () => {
@@ -126,180 +141,207 @@ export const Budget = () => {
 
   return (
     <PageWrapper>
-      <Typography
-        variant="h3"
-        sx={{ textAlign: "center", marginBottom: "40px" }}>
-        Budżet domowy
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: maxWidth1000 ? "column" : "row",
-          width: maxWidth1000 || "100%",
-          maxWidth: "1600px",
-          justifyContent: "center",
-          gap: "20px",
-          backgroundColor: Theme.palette.secondary.main,
-          padding: "30px",
-          margin: "20px",
-          boxSizing: "border-box",
-        }}>
-        <div
-          style={{
-            alignSelf: maxWidth1000 ? "center" : "flex-start",
-            width: maxWidth1000 ? "inherit" : "15%",
-            flexGrow: "1.5",
-            marginTop: "17px",
-            margin: "0px",
+      <FadeComponent>
+        <Typography
+          variant="h3"
+          sx={{ textAlign: "center", marginBottom: "40px" }}>
+          Budżet domowy
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: maxWidth1000 ? "column" : "row",
+            width: maxWidth1000 || "100%",
+            maxWidth: "1600px",
+            justifyContent: "center",
+            gap: "20px",
+            backgroundColor: Theme.palette.secondary.main,
+            padding: "30px",
+            margin: "20px",
+            boxSizing: "border-box",
           }}>
-          {chosenMoneyOperations === "expenses" ? (
-            <Typography variant="h6" style={{ textAlign: "center" }}>
-              Suma wydatków
-            </Typography>
-          ) : (
-            <Typography variant="h6" style={{ textAlign: "center" }}>
-              Suma przychodów
-            </Typography>
-          )}
-          <Box
-            sx={{
-              fontSize: "30px",
-              padding: "1.5rem",
-              alignSelf: "center",
-              backgroundColor: Theme.palette.backgroundColor.main,
-              textAlign: "center",
-            }}>
-            {chosenMoneyOperations === "expenses"
-              ? `${parseFloat(expensesSum).toFixed(2)} zł`
-              : `${parseFloat(incomesSum).toFixed(2)} zł`}
-          </Box>
-        </div>
-        <div style={{ flexGrow: "2" }}>
           <div
             style={{
-              display: "flex",
-              justifyContent: "center",
+              alignSelf: maxWidth1000 ? "center" : "flex-start",
+              width: maxWidth1000 ? "inherit" : "15%",
+              flexGrow: "1.5",
+              marginTop: "17px",
+              margin: "0px",
             }}>
-            <Button
-              type="submit"
-              variant="outlined"
-              sx={{
-                margin: "1rem",
-                height: "3rem",
-                width: "8rem",
-                backgroundColor:
-                  chosenMoneyOperations === "expenses"
-                    ? theme.palette.primary.contrastText
-                    : "white",
-                ":hover": {
-                  backgroundColor: theme.palette.primary.contrastText,
-                },
-              }}
-              onClick={() => setChosenMoneyOperations("expenses")}>
-              Wydatki
-            </Button>
-            <Button
-              type="submit"
-              variant="outlined"
-              sx={{
-                margin: "1rem",
-                height: "3rem",
-                width: "8rem",
-                color: theme.palette.primary,
-                backgroundColor:
-                  chosenMoneyOperations === "incomes"
-                    ? theme.palette.primary.contrastText
-                    : "white",
-                ":hover": {
-                  backgroundColor: theme.palette.primary.contrastText,
-                },
-              }}
-              onClick={() => setChosenMoneyOperations("incomes")}>
-              Przychody
-            </Button>
-          </div>
-          {chosenMoneyOperations === "expenses" ? (
-            <BudgetFormExpenses uid={uid} onSubmit={handleExpenseSubmit} />
-          ) : (
-            <BudgetFormIncomes uid={uid} onSubmit={handleIncomesSubmit} />
-          )}
-        </div>
-
-        {chosenMoneyOperations === "expenses" ? (
-          <div
-            style={{
-              flexGrow: "3",
-              width: maxWidth1000 ? "inherit" : "700px",
-            }}>
-            <ListContainer style={{ marginTop: "0" }}>
-              <h3>Pokaż wydatki z kategorii: </h3>
-              <Select
-                id="Category"
-                value={expensesFilterValue}
-                onChange={handleExpensesFilter}
+            {chosenMoneyOperations === "expenses" ? (
+              <GrowComponent>
+                <Typography variant="h6" style={{ textAlign: "center" }}>
+                  Suma wydatków
+                </Typography>
+              </GrowComponent>
+            ) : (
+              <GrowComponent2>
+                <Typography variant="h6" style={{ textAlign: "center" }}>
+                  Suma przychodów
+                </Typography>
+              </GrowComponent2>
+            )}
+            <GrowComponent>
+              <Box
                 sx={{
+                  fontSize: "30px",
+                  padding: "1.5rem",
+                  alignSelf: "center",
+                  backgroundColor: Theme.palette.backgroundColor.main,
+                  textAlign: "center",
+                }}>
+                {chosenMoneyOperations === "expenses" ? (
+                  <GrowComponent>
+                    <Box>{`${parseFloat(expensesSum).toFixed(2)} zł`}</Box>
+                  </GrowComponent>
+                ) : (
+                  <GrowComponent2>
+                    <Box>{`${parseFloat(incomesSum).toFixed(2)} zł`}</Box>
+                  </GrowComponent2>
+                )}
+              </Box>
+            </GrowComponent>
+          </div>
+
+          <div style={{ flexGrow: "2" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}>
+              <Button
+                type="submit"
+                variant="outlined"
+                sx={{
+                  margin: "1rem",
                   height: "3rem",
-                  width: "10rem",
-                  backgroundColor: theme.palette.secondary.contrastText,
+                  width: "8rem",
+                  backgroundColor:
+                    chosenMoneyOperations === "expenses"
+                      ? theme.palette.primary.contrastText
+                      : "white",
                   ":hover": {
                     backgroundColor: theme.palette.primary.contrastText,
                   },
-                }}>
-                <MenuItem value="Wszystko">Wszystko</MenuItem>
-                <MenuItem value="Jedzenie/Napoje">Jedzenie/Napoje</MenuItem>
-                <MenuItem value="Rachunki">Rachunki</MenuItem>
-                <MenuItem value="Rozrywka">Rozrywka</MenuItem>
-                <MenuItem value="Zakupy">Zakupy</MenuItem>
-                <MenuItem value="Transport">Transport</MenuItem>
-                <MenuItem value="Rodzina">Rodzina</MenuItem>
-                <MenuItem value="Zwierzęta">Zwierzęta</MenuItem>
-                <MenuItem value="Podróże">Podróże</MenuItem>
-                <MenuItem value="Inne">Inne</MenuItem>
-              </Select>
-            </ListContainer>
-            <ExpensesList
-              uid={uid}
-              expenses={filterExpenses}
-              onDelete={handleExpensesDelete}
-              firestore={firestore}
-              widthEditInput={widthEditInput}
-            />
-          </div>
-        ) : (
-          <div
-            style={{
-              flexGrow: "3",
-              width: maxWidth1000 ? "inherit" : "700px",
-            }}>
-            <ListContainer style={{ marginTop: "0" }}>
-              <h3>Pokaż przychody z kategorii: </h3>
-
-              <Select
-                id="Category"
-                value={incomesFilterValue}
-                onChange={handleIncomesFilter}
+                }}
+                onClick={() => setChosenMoneyOperations("expenses")}>
+                Wydatki
+              </Button>
+              <Button
+                type="submit"
+                variant="outlined"
                 sx={{
+                  margin: "1rem",
                   height: "3rem",
-                  width: "10rem",
-                  backgroundColor: theme.palette.secondary.contrastText,
+                  width: "8rem",
+                  color: theme.palette.primary,
+                  backgroundColor:
+                    chosenMoneyOperations === "incomes"
+                      ? theme.palette.primary.contrastText
+                      : "white",
                   ":hover": {
                     backgroundColor: theme.palette.primary.contrastText,
                   },
-                }}>
-                <MenuItem value="Wszystko">Wszystko</MenuItem>
-                <MenuItem value="Wynagrodzenie">Wynagrodzenie</MenuItem>
-                <MenuItem value="Inne">Inne</MenuItem>
-              </Select>
-            </ListContainer>
-            <IncomesList
-              uid={uid}
-              incomes={filterIncomes}
-              onDelete={handleIncomesDelete}
-              firestore={firestore}
-            />
+                }}
+                onClick={() => setChosenMoneyOperations("incomes")}>
+                Przychody
+              </Button>
+            </div>
+            {chosenMoneyOperations === "expenses" ? (
+              <GrowComponent>
+                <BudgetFormExpenses uid={uid} onSubmit={handleExpenseSubmit} />
+              </GrowComponent>
+            ) : (
+              <GrowComponent2>
+                <BudgetFormIncomes uid={uid} onSubmit={handleIncomesSubmit} />
+              </GrowComponent2>
+            )}
           </div>
-        )}
-      </Box>
+
+          {chosenMoneyOperations === "expenses" ? (
+            <div
+              style={{
+                flexGrow: "3",
+                width: maxWidth1000 ? "inherit" : "700px",
+              }}>
+              <GrowComponent>
+                <ListContainer style={{ marginTop: "0" }}>
+                  <h3>Pokaż wydatki z kategorii: </h3>
+                  <Select
+                    id="Category"
+                    value={expensesFilterValue}
+                    onChange={handleExpensesFilter}
+                    sx={{
+                      height: "3rem",
+                      width: "10rem",
+                      backgroundColor: theme.palette.secondary.contrastText,
+                      ":hover": {
+                        backgroundColor: theme.palette.primary.contrastText,
+                      },
+                    }}>
+                    <MenuItem value="Wszystko">Wszystko</MenuItem>
+                    <MenuItem value="Jedzenie/Napoje">Jedzenie/Napoje</MenuItem>
+                    <MenuItem value="Rachunki">Rachunki</MenuItem>
+                    <MenuItem value="Rozrywka">Rozrywka</MenuItem>
+                    <MenuItem value="Zakupy">Zakupy</MenuItem>
+                    <MenuItem value="Transport">Transport</MenuItem>
+                    <MenuItem value="Rodzina">Rodzina</MenuItem>
+                    <MenuItem value="Zwierzęta">Zwierzęta</MenuItem>
+                    <MenuItem value="Podróże">Podróże</MenuItem>
+                    <MenuItem value="Inne">Inne</MenuItem>
+                  </Select>
+                </ListContainer>
+              </GrowComponent>
+              <GrowComponent>
+                <ExpensesList
+                  uid={uid}
+                  expenses={filterExpenses}
+                  onDelete={handleExpensesDelete}
+                  firestore={firestore}
+                  widthEditInput={widthEditInput}
+                />
+              </GrowComponent>
+            </div>
+          ) : (
+            <div
+              style={{
+                flexGrow: "3",
+                width: maxWidth1000 ? "inherit" : "700px",
+              }}>
+              <GrowComponent2>
+                <ListContainer style={{ marginTop: "0" }}>
+                  <h3>Pokaż przychody z kategorii: </h3>
+
+                  <Select
+                    id="Category"
+                    value={incomesFilterValue}
+                    onChange={handleIncomesFilter}
+                    sx={{
+                      height: "3rem",
+                      width: "10rem",
+                      backgroundColor: theme.palette.secondary.contrastText,
+                      ":hover": {
+                        backgroundColor: theme.palette.primary.contrastText,
+                      },
+                    }}>
+                    <MenuItem value="Wszystko">Wszystko</MenuItem>
+                    <MenuItem value="Wynagrodzenie">Wynagrodzenie</MenuItem>
+                    <MenuItem value="Inne">Inne</MenuItem>
+                  </Select>
+                </ListContainer>
+              </GrowComponent2>
+              <GrowComponent2>
+                <IncomesList
+                  uid={uid}
+                  incomes={filterIncomes}
+                  onDelete={handleIncomesDelete}
+                  firestore={firestore}
+                />
+              </GrowComponent2>
+            </div>
+          )}
+        </Box>
+      </FadeComponent>
     </PageWrapper>
   );
 };

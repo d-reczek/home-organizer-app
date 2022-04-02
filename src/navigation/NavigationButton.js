@@ -2,7 +2,7 @@ import { Theme } from "../common/theme/theme";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
-export const NavigationButton = ({ to, item }) => {
+export const NavigationButton = ({ to, item, handleClick }) => {
   return (
     <Button
       sx={{
@@ -19,9 +19,10 @@ export const NavigationButton = ({ to, item }) => {
           borderRadius: "none",
         },
       }}
+      onClick={handleClick}
       component={Link}
       to={to}>
-      {item.label}
+      {item.label || item}
     </Button>
   );
 };

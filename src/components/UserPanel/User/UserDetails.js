@@ -17,6 +17,7 @@ import { Theme } from "../../../common/theme/theme";
 
 import { ChangePassword } from "./ChangePasword";
 import { DeleteUser } from "./DeleteUser";
+import { GrowComponent } from "../../../common/page-wrapper/GrowComponent";
 
 const DetailsContainer = styled.div`
   color: #fff;
@@ -182,17 +183,45 @@ export const UserDetails = ({ userData, db }) => {
                   <UserAvatar />
                 </AvatarContainer>
                 <Typography variant="h5">Dane użytkownika</Typography>
-                <DetailsContainer>
-                  <TextFieldReadOnly value={element.name} label={"Imię"} />
-                  <TextFieldReadOnly
-                    value={element.surname}
-                    label={"Nazwisko"}
-                  />
+                <GrowComponent>
+                  <DetailsContainer>
+                    <TextFieldReadOnly value={element.name} label={"Imię"} />
+                    <TextFieldReadOnly
+                      value={element.surname}
+                      label={"Nazwisko"}
+                    />
 
-                  <TextFieldReadOnly value={email} label={"Email"} />
-                  {!editPassword ? (
+                    <TextFieldReadOnly value={email} label={"Email"} />
+                    {!editPassword ? (
+                      <Button
+                        onClick={handleChangePassword}
+                        sx={{
+                          background: Theme.palette.secondary.main,
+                          color: Theme.palette.secondary.contrastText,
+                          border: `2px solid ${Theme.palette.secondary.main}`,
+                          borderRadius: "0px",
+                          transition: "all",
+                          transitionDuration: "0.3s",
+                          ":hover": {
+                            color: Theme.palette.primary.main,
+                            background: Theme.palette.primary.contrastText,
+                            border: `2px solid ${Theme.palette.primary.contrastText}`,
+                            borderRadius: "0",
+                          },
+                        }}>
+                        Zmień hasło
+                      </Button>
+                    ) : (
+                      <ChangePassword
+                        setEditPassword={setEditPassword}
+                        userEmail={userEmail}
+                        newPassword={newPassword}
+                        setNewPassword={setNewPassword}
+                      />
+                    )}
+
                     <Button
-                      onClick={handleChangePassword}
+                      onClick={handleAskToDelete}
                       sx={{
                         background: Theme.palette.secondary.main,
                         color: Theme.palette.secondary.contrastText,
@@ -207,172 +236,148 @@ export const UserDetails = ({ userData, db }) => {
                           borderRadius: "0",
                         },
                       }}>
-                      Zmień hasło
+                      Usuń konto
                     </Button>
-                  ) : (
-                    <ChangePassword
-                      setEditPassword={setEditPassword}
-                      userEmail={userEmail}
-                      newPassword={newPassword}
-                      setNewPassword={setNewPassword}
-                    />
-                  )}
+                    {deleteUser && (
+                      <DeleteUser
+                        setDeleteUser={setDeleteUser}
+                        open={open}
+                        setOpen={setOpen}
+                        userEmail={userEmail}
+                      />
+                    )}
 
-                  <Button
-                    onClick={handleAskToDelete}
-                    sx={{
-                      background: Theme.palette.secondary.main,
-                      color: Theme.palette.secondary.contrastText,
-                      border: `2px solid ${Theme.palette.secondary.main}`,
-                      borderRadius: "0px",
-                      transition: "all",
-                      transitionDuration: "0.3s",
-                      ":hover": {
-                        color: Theme.palette.primary.main,
-                        background: Theme.palette.primary.contrastText,
-                        border: `2px solid ${Theme.palette.primary.contrastText}`,
-                        borderRadius: "0",
-                      },
-                    }}>
-                    Usuń konto
-                  </Button>
-                  {deleteUser && (
-                    <DeleteUser
-                      setDeleteUser={setDeleteUser}
-                      open={open}
-                      setOpen={setOpen}
-                      userEmail={userEmail}
-                    />
-                  )}
-
-                  {!telephoneEdit && (
-                    <TextFieldView
-                      label="Nr telefonu"
-                      value={element.telephone}
-                      handleClick={handleClickEditTelephone}
-                    />
-                  )}
-                  {telephoneEdit && (
-                    <>
-                      <EditTextField
-                        value={takenValue}
-                        onChange={e => setTakenValue(e.target.value)}
+                    {!telephoneEdit && (
+                      <TextFieldView
                         label="Nr telefonu"
+                        value={element.telephone}
+                        handleClick={handleClickEditTelephone}
                       />
-                      <SaveButton
-                        handleClickSave={handleClickSave}
-                        id={element.id}
-                      />
-                      <CancelButton
-                        handleClickCancel={handleClickCancel}
-                        id={element.id}
-                      />
-                    </>
-                  )}
-                </DetailsContainer>
+                    )}
+                    {telephoneEdit && (
+                      <>
+                        <EditTextField
+                          value={takenValue}
+                          onChange={e => setTakenValue(e.target.value)}
+                          label="Nr telefonu"
+                        />
+                        <SaveButton
+                          handleClickSave={handleClickSave}
+                          id={element.id}
+                        />
+                        <CancelButton
+                          handleClickCancel={handleClickCancel}
+                          id={element.id}
+                        />
+                      </>
+                    )}
+                  </DetailsContainer>
+                </GrowComponent>
                 <Typography variant="h5">Adres</Typography>
-                <DetailsContainer style={{ flexWrap: "wrap" }}>
-                  {!streetEdit && (
-                    <TextFieldView
-                      label="Ulica"
-                      value={element.street}
-                      handleClick={handleClickEditStreet}
-                    />
-                  )}
-                  {streetEdit && (
-                    <>
-                      <EditTextField
-                        value={takenValue}
-                        onChange={e => setTakenValue(e.target.value)}
+                <GrowComponent>
+                  <DetailsContainer style={{ flexWrap: "wrap" }}>
+                    {!streetEdit && (
+                      <TextFieldView
                         label="Ulica"
+                        value={element.street}
+                        handleClick={handleClickEditStreet}
                       />
+                    )}
+                    {streetEdit && (
+                      <>
+                        <EditTextField
+                          value={takenValue}
+                          onChange={e => setTakenValue(e.target.value)}
+                          label="Ulica"
+                        />
 
-                      <SaveButton
-                        handleClickSave={handleClickSave}
-                        id={element.id}
+                        <SaveButton
+                          handleClickSave={handleClickSave}
+                          id={element.id}
+                        />
+                        <CancelButton
+                          handleClickCancel={handleClickCancel}
+                          id={element.id}
+                        />
+                      </>
+                    )}
+                    {!houseNumberEdit && (
+                      <TextFieldView
+                        label="Nr dom/mieszkania"
+                        value={element.houseNumber}
+                        handleClick={handleClickEditHouseNumber}
                       />
-                      <CancelButton
-                        handleClickCancel={handleClickCancel}
-                        id={element.id}
-                      />
-                    </>
-                  )}
-                  {!houseNumberEdit && (
-                    <TextFieldView
-                      label="Nr dom/mieszkania"
-                      value={element.houseNumber}
-                      handleClick={handleClickEditHouseNumber}
-                    />
-                  )}
-                  {houseNumberEdit && (
-                    <>
-                      <EditTextField
-                        value={takenValue}
-                        onChange={e => setTakenValue(e.target.value)}
-                        label="Nr domu/mieszkania"
-                      />
+                    )}
+                    {houseNumberEdit && (
+                      <>
+                        <EditTextField
+                          value={takenValue}
+                          onChange={e => setTakenValue(e.target.value)}
+                          label="Nr domu/mieszkania"
+                        />
 
-                      <SaveButton
-                        handleClickSave={handleClickSave}
-                        id={element.id}
-                      />
-                      <CancelButton
-                        handleClickCancel={handleClickCancel}
-                        id={element.id}
-                      />
-                    </>
-                  )}
-                  {!cityEdit && (
-                    <TextFieldView
-                      label="Miejscowość"
-                      value={element.city}
-                      handleClick={handleClickEditCity}
-                    />
-                  )}
-                  {cityEdit && (
-                    <>
-                      <EditTextField
-                        value={takenValue}
-                        onChange={e => setTakenValue(e.target.value)}
+                        <SaveButton
+                          handleClickSave={handleClickSave}
+                          id={element.id}
+                        />
+                        <CancelButton
+                          handleClickCancel={handleClickCancel}
+                          id={element.id}
+                        />
+                      </>
+                    )}
+                    {!cityEdit && (
+                      <TextFieldView
                         label="Miejscowość"
+                        value={element.city}
+                        handleClick={handleClickEditCity}
                       />
+                    )}
+                    {cityEdit && (
+                      <>
+                        <EditTextField
+                          value={takenValue}
+                          onChange={e => setTakenValue(e.target.value)}
+                          label="Miejscowość"
+                        />
 
-                      <SaveButton
-                        handleClickSave={handleClickSave}
-                        id={element.id}
-                      />
-                      <CancelButton
-                        handleClickCancel={handleClickCancel}
-                        id={element.id}
-                      />
-                    </>
-                  )}
-                  {!postCodeEdit && (
-                    <TextFieldView
-                      label="Kod pocztowy"
-                      value={element.postcode}
-                      handleClick={handleClickEditPostcode}
-                    />
-                  )}
-                  {postCodeEdit && (
-                    <>
-                      <EditTextField
-                        value={takenValue}
-                        onChange={e => setTakenValue(e.target.value)}
+                        <SaveButton
+                          handleClickSave={handleClickSave}
+                          id={element.id}
+                        />
+                        <CancelButton
+                          handleClickCancel={handleClickCancel}
+                          id={element.id}
+                        />
+                      </>
+                    )}
+                    {!postCodeEdit && (
+                      <TextFieldView
                         label="Kod pocztowy"
+                        value={element.postcode}
+                        handleClick={handleClickEditPostcode}
                       />
+                    )}
+                    {postCodeEdit && (
+                      <>
+                        <EditTextField
+                          value={takenValue}
+                          onChange={e => setTakenValue(e.target.value)}
+                          label="Kod pocztowy"
+                        />
 
-                      <SaveButton
-                        handleClickSave={handleClickSave}
-                        id={element.id}
-                      />
-                      <CancelButton
-                        handleClickCancel={handleClickCancel}
-                        id={element.id}
-                      />
-                    </>
-                  )}
-                </DetailsContainer>
+                        <SaveButton
+                          handleClickSave={handleClickSave}
+                          id={element.id}
+                        />
+                        <CancelButton
+                          handleClickCancel={handleClickCancel}
+                          id={element.id}
+                        />
+                      </>
+                    )}
+                  </DetailsContainer>
+                </GrowComponent>
               </div>
             )
         )}

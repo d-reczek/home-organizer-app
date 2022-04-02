@@ -22,6 +22,7 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 import styled from "@emotion/styled";
 import { EditTextField } from "../UserPanel/text-field/EditTextField";
+import { FadeComponent } from "../../common/page-wrapper/FadeComponent";
 
 const ResetButtonContainer = styled.div`
   display: flex;
@@ -112,7 +113,7 @@ export const Sign = ({ isSignUp }) => {
         console.log(error);
         setErrorMessage("Błąd autoryzacji. Wprowadz poprawny login i hasło");
         break;
-        default :
+      default:
         console.log(error);
         setErrorMessage(error);
     }
@@ -189,28 +190,77 @@ export const Sign = ({ isSignUp }) => {
           handleClose={handleClose}
         />
       )}
-
       <Container component="main" maxWidth="sm">
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            background: Theme.palette.secondary.main,
-          }}>
-          <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
-            <Icon>lock</Icon>
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {isSignUp ? "Zarejestruj się!" : "Zaloguj się!"}
-          </Typography>
-
+        <FadeComponent>
           <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 3, height: 500 }}>
-            {isSignUp && (
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              background: Theme.palette.secondary.main,
+            }}>
+            <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
+              <Icon>lock</Icon>
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {isSignUp ? "Zarejestruj się!" : "Zaloguj się!"}
+            </Typography>
+
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 3, height: 500 }}>
+              {isSignUp && (
+                <TextField
+                  sx={{
+                    bgcolor: Theme.palette.secondary.contrastText,
+                    ":hover": { bgcolor: Theme.palette.primary.contrastText },
+                    width: {
+                      lg: 400,
+                    },
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                  id="name"
+                  label="Imię"
+                  type="text"
+                  autoComplete="name"
+                  variant="filled"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="name"
+                  value={name}
+                  onChange={handleNameChange}
+                />
+              )}
+              {isSignUp && (
+                <TextField
+                  sx={{
+                    bgcolor: Theme.palette.secondary.contrastText,
+                    ":hover": { bgcolor: Theme.palette.primary.contrastText },
+                    width: {
+                      lg: 400,
+                    },
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                  id="surname"
+                  label="Nazwisko"
+                  type="text"
+                  autoComplete="surname"
+                  variant="filled"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="surname"
+                  value={surname}
+                  onChange={handleSurnameChange}
+                />
+              )}
               <TextField
                 sx={{
                   bgcolor: Theme.palette.secondary.contrastText,
@@ -222,20 +272,18 @@ export const Sign = ({ isSignUp }) => {
                   flexDirection: "column",
                   alignItems: "center",
                 }}
-                id="name"
-                label="Imię"
-                type="text"
-                autoComplete="name"
+                id="email"
+                label="Adres email"
+                type="email"
+                autoComplete="email"
                 variant="filled"
                 margin="normal"
                 required
                 fullWidth
-                name="name"
-                value={name}
-                onChange={handleNameChange}
+                name="email"
+                value={email}
+                onChange={handleEmailChange}
               />
-            )}
-            {isSignUp && (
               <TextField
                 sx={{
                   bgcolor: Theme.palette.secondary.contrastText,
@@ -247,79 +295,8 @@ export const Sign = ({ isSignUp }) => {
                   flexDirection: "column",
                   alignItems: "center",
                 }}
-                id="surname"
-                label="Nazwisko"
-                type="text"
-                autoComplete="surname"
-                variant="filled"
-                margin="normal"
-                required
-                fullWidth
-                name="surname"
-                value={surname}
-                onChange={handleSurnameChange}
-              />
-            )}
-            <TextField
-              sx={{
-                bgcolor: Theme.palette.secondary.contrastText,
-                ":hover": { bgcolor: Theme.palette.primary.contrastText },
-                width: {
-                  lg: 400,
-                },
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-              id="email"
-              label="Adres email"
-              type="email"
-              autoComplete="email"
-              variant="filled"
-              margin="normal"
-              required
-              fullWidth
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
-            />
-            <TextField
-              sx={{
-                bgcolor: Theme.palette.secondary.contrastText,
-                ":hover": { bgcolor: Theme.palette.primary.contrastText },
-                width: {
-                  lg: 400,
-                },
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-              id="password"
-              label="Hasło"
-              type="password"
-              autoComplete="current-password"
-              variant="filled"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-            {isSignUp && (
-              <TextField
-                sx={{
-                  bgcolor: Theme.palette.secondary.contrastText,
-                  ":hover": { bgcolor: Theme.palette.primary.contrastText },
-                  width: {
-                    lg: 400,
-                  },
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-                id="confirm-password"
-                label="Potwierdz hasło"
+                id="password"
+                label="Hasło"
                 type="password"
                 autoComplete="current-password"
                 variant="filled"
@@ -327,127 +304,152 @@ export const Sign = ({ isSignUp }) => {
                 required
                 fullWidth
                 name="password"
-                value={confirmPassword}
-                onChange={handlePasswordConfirm}
+                value={password}
+                onChange={handlePasswordChange}
               />
-            )}
+              {isSignUp && (
+                <TextField
+                  sx={{
+                    bgcolor: Theme.palette.secondary.contrastText,
+                    ":hover": { bgcolor: Theme.palette.primary.contrastText },
+                    width: {
+                      lg: 400,
+                    },
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                  id="confirm-password"
+                  label="Potwierdz hasło"
+                  type="password"
+                  autoComplete="current-password"
+                  variant="filled"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  value={confirmPassword}
+                  onChange={handlePasswordConfirm}
+                />
+              )}
 
-            <Button
-              fullWidth
-              sx={{
-                mt: 3,
-                mb: 5,
-                bgcolor: Theme.palette.secondary.contrastText,
-                ":hover": { bgcolor: Theme.palette.primary.contrastText },
-              }}
-              bgcolor="secondary"
-              type="submit">
-              {isSignUp ? "Zarejestruj się" : "Zaloguj"}
-            </Button>
+              <Button
+                fullWidth
+                sx={{
+                  mt: 3,
+                  mb: 5,
+                  bgcolor: Theme.palette.secondary.contrastText,
+                  ":hover": { bgcolor: Theme.palette.primary.contrastText },
+                }}
+                bgcolor="secondary"
+                type="submit">
+                {isSignUp ? "Zarejestruj się" : "Zaloguj"}
+              </Button>
 
-            <Grid container>
-              <Grid item>
-                {!isSignUp && (
-                  <Typography
-                    onClick={handleResetPassoword}
-                    sx={{
-                      textDecoration: "none",
-                      color: "white",
-                      underline: "none",
-                      marginBottom: "20px",
-                      cursor: "pointer",
-                    }}>
-                    Nie pamiętasz hasła? Kliknij tutaj.
-                  </Typography>
-                )}
-                {resetPassword && (
-                  <Dialog
-                    open={open}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description">
-                    <DialogTitle id="alert-dialog-title">
-                      Wprowadz swój adres email
-                    </DialogTitle>
-                    <DialogActions>
-                      <ResetButtonContainer>
-                        <EditTextField
-                          value={resetEmail}
-                          onChange={e => setResetEmail(e.target.value)}
-                          label="Adres email"
-                        />
-                      </ResetButtonContainer>
-                      <ResetButtonContainer>
-                        <Button
-                          sx={{
-                            margin: "5px 5px 5px auto",
-                            background: Theme.palette.secondary.main,
-                            color: Theme.palette.secondary.contrastText,
-                            border: `2px solid ${Theme.palette.secondary.main}`,
-                            borderRadius: "0px",
-                            transition: "all",
-                            transitionDuration: "0.3s",
-                            ":hover": {
-                              color: Theme.palette.primary.main,
-                              background: Theme.palette.primary.contrastText,
-                              border: `2px solid ${Theme.palette.primary.contrastText}`,
-                              borderRadius: "0",
-                            },
-                          }}
-                          onClick={handleClose}>
-                          Anuluj
-                        </Button>
-                        <Button
-                          sx={{
-                            margin: "5px auto 5px 5px",
-                            background: Theme.palette.secondary.main,
-                            color: Theme.palette.secondary.contrastText,
-                            border: `2px solid ${Theme.palette.secondary.main}`,
-                            borderRadius: "0px",
-                            transition: "all",
-                            transitionDuration: "0.3s",
-                            ":hover": {
-                              color: Theme.palette.primary.main,
-                              background: Theme.palette.primary.contrastText,
-                              border: `2px solid ${Theme.palette.primary.contrastText}`,
-                              borderRadius: "0",
-                            },
-                          }}
-                          onClick={handleSendResetLink}>
-                          Wyślij
-                        </Button>
-                      </ResetButtonContainer>
-                    </DialogActions>
-                  </Dialog>
-                )}
-
-                <Link to={isSignUp ? "/sign-in" : "/sign-up"}>
-                  {isSignUp && (
+              <Grid container>
+                <Grid item>
+                  {!isSignUp && (
                     <Typography
+                      onClick={handleResetPassoword}
                       sx={{
                         textDecoration: "none",
                         color: "white",
                         underline: "none",
+                        marginBottom: "20px",
+                        cursor: "pointer",
                       }}>
-                      Masz już konto? Zaloguj się
+                      Nie pamiętasz hasła? Kliknij tutaj.
                     </Typography>
                   )}
-                  {!isSignUp && (
-                    <>
+                  {resetPassword && (
+                    <Dialog
+                      open={open}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description">
+                      <DialogTitle id="alert-dialog-title">
+                        Wprowadz swój adres email
+                      </DialogTitle>
+                      <DialogActions>
+                        <ResetButtonContainer>
+                          <EditTextField
+                            value={resetEmail}
+                            onChange={e => setResetEmail(e.target.value)}
+                            label="Adres email"
+                          />
+                        </ResetButtonContainer>
+                        <ResetButtonContainer>
+                          <Button
+                            sx={{
+                              margin: "5px 5px 5px auto",
+                              background: Theme.palette.secondary.main,
+                              color: Theme.palette.secondary.contrastText,
+                              border: `2px solid ${Theme.palette.secondary.main}`,
+                              borderRadius: "0px",
+                              transition: "all",
+                              transitionDuration: "0.3s",
+                              ":hover": {
+                                color: Theme.palette.primary.main,
+                                background: Theme.palette.primary.contrastText,
+                                border: `2px solid ${Theme.palette.primary.contrastText}`,
+                                borderRadius: "0",
+                              },
+                            }}
+                            onClick={handleClose}>
+                            Anuluj
+                          </Button>
+                          <Button
+                            sx={{
+                              margin: "5px auto 5px 5px",
+                              background: Theme.palette.secondary.main,
+                              color: Theme.palette.secondary.contrastText,
+                              border: `2px solid ${Theme.palette.secondary.main}`,
+                              borderRadius: "0px",
+                              transition: "all",
+                              transitionDuration: "0.3s",
+                              ":hover": {
+                                color: Theme.palette.primary.main,
+                                background: Theme.palette.primary.contrastText,
+                                border: `2px solid ${Theme.palette.primary.contrastText}`,
+                                borderRadius: "0",
+                              },
+                            }}
+                            onClick={handleSendResetLink}>
+                            Wyślij
+                          </Button>
+                        </ResetButtonContainer>
+                      </DialogActions>
+                    </Dialog>
+                  )}
+
+                  <Link to={isSignUp ? "/sign-in" : "/sign-up"}>
+                    {isSignUp && (
                       <Typography
                         sx={{
                           textDecoration: "none",
                           color: "white",
                           underline: "none",
                         }}>
-                        Nie masz konta? Zarejestruj się!
+                        Masz już konto? Zaloguj się
                       </Typography>
-                    </>
-                  )}
-                </Link>
+                    )}
+                    {!isSignUp && (
+                      <>
+                        <Typography
+                          sx={{
+                            textDecoration: "none",
+                            color: "white",
+                            underline: "none",
+                          }}>
+                          Nie masz konta? Zarejestruj się!
+                        </Typography>
+                      </>
+                    )}
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
+        </FadeComponent>
       </Container>
     </PageWrapper>
   );
