@@ -93,7 +93,7 @@ export const HomeLogin = ({
             </BoxContainer>
 
             <BoxContainerDashboard>
-              <Box sx={{ flexGrow: "5", width: "75rem" }}>
+              <Box sx={{ width: "100%" }}>
                 <Box
                   sx={{
                     display: "flex",
