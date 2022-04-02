@@ -5,7 +5,7 @@ import { Theme } from "../../../common/theme/theme";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
-import { Box } from "@mui/material";
+import { Box, Grow } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { DeleteDialog } from "./DeleteDialog";
 import { doc, updateDoc } from "firebase/firestore";
@@ -18,6 +18,8 @@ import { SaveButton } from "../../../common/buttons/SaveButton";
 import { EditInput } from "./EditInput";
 import { SelectComponent } from "./SelectComponent";
 import { GrowComponent } from "../../../common/page-wrapper/GrowComponent";
+import { TransitionGroup } from "react-transition-group";
+
 dayjs.locale("pl");
 
 const NewIncomeContainer = styled.div`
@@ -98,74 +100,78 @@ function IncomesList({ uid, incomes, onDelete, firestore, widthEditInput }) {
     <Box>
       <div className="income-container">
         <List>
-          {incomes.map(
-            income =>
-              income.uid === uid && (
-                <div key={income.id}>
-                  <GrowComponent>
-                    <NewIncomeContainer>
-                      <ListItem className="incomes" key={income.id}>
-                        {income.id === editedTaskId ? (
-                          <ListItemContainer>
-                            <EditInput
-                              onChange={handleAmountChange}
-                              value={amountInput}
-                              type="number"
-                              width={widthEditInput}
-                            />
-                            <SelectComponent
-                              handleCategoryChange={handleCategoryChange}
-                              categoryInput={categoryInput}
-                              width="130px">
-                              <MenuItem value="Wynagrodzenie">
-                                Wynagrodzenie
-                              </MenuItem>
-                              <MenuItem value="Inne">Inne</MenuItem>
-                            </SelectComponent>
-                            <EditInput
-                              onChange={handleDateChange}
-                              value={dateInput}
-                              type="date"
-                              width="170px"
-                            />
+          <TransitionGroup>
+            {incomes.map(
+              income =>
+                income.uid === uid && (
+                  <Grow key={income.id} in timeout={1000}>
+                    <div>
+                      <NewIncomeContainer>
+                        <ListItem className="incomes" key={income.id}>
+                          {income.id === editedTaskId ? (
+                            <ListItemContainer>
+                              <EditInput
+                                onChange={handleAmountChange}
+                                value={amountInput}
+                                type="number"
+                                width={widthEditInput}
+                              />
+                              <SelectComponent
+                                handleCategoryChange={handleCategoryChange}
+                                categoryInput={categoryInput}
+                                width="130px">
+                                <MenuItem value="Wynagrodzenie">
+                                  Wynagrodzenie
+                                </MenuItem>
+                                <MenuItem value="Inne">Inne</MenuItem>
+                              </SelectComponent>
+                              <EditInput
+                                onChange={handleDateChange}
+                                value={dateInput}
+                                type="date"
+                                width="170px"
+                              />
 
-                            <SaveButton
-                              handleClickSave={handleClickSave}
-                              id={income.id}
-                            />
-                            <CancelButton
-                              handleClickCancel={handleClickCancel}
-                            />
-                            <DeleteButton
-                              handleClickOpen={handleClickOpen}
-                              id={income.id}
-                            />
-                          </ListItemContainer>
-                        ) : (
-                          <ListItemContainer>
-                            <ListItemElement>
-                              {parseFloat(income.amount).toFixed(2)} zł
-                            </ListItemElement>
-                            <ListItemElement>{income.category}</ListItemElement>
-                            <ListItemElement>
-                              {dayjs(income.date).format("D MMMM")}
-                            </ListItemElement>
-                            <EditButton
-                              handleClickEdit={handleClickEdit}
-                              id={income.id}
-                            />
-                            <DeleteButton
-                              handleClickOpen={handleClickOpen}
-                              id={income.id}
-                            />
-                          </ListItemContainer>
-                        )}
-                      </ListItem>
-                    </NewIncomeContainer>
-                  </GrowComponent>
-                </div>
-              )
-          )}
+                              <SaveButton
+                                handleClickSave={handleClickSave}
+                                id={income.id}
+                              />
+                              <CancelButton
+                                handleClickCancel={handleClickCancel}
+                              />
+                              <DeleteButton
+                                handleClickOpen={handleClickOpen}
+                                id={income.id}
+                              />
+                            </ListItemContainer>
+                          ) : (
+                            <ListItemContainer>
+                              <ListItemElement>
+                                {parseFloat(income.amount).toFixed(2)} zł
+                              </ListItemElement>
+                              <ListItemElement>
+                                {income.category}
+                              </ListItemElement>
+                              <ListItemElement>
+                                {dayjs(income.date).format("D MMMM")}
+                              </ListItemElement>
+                              <EditButton
+                                handleClickEdit={handleClickEdit}
+                                id={income.id}
+                              />
+                              <DeleteButton
+                                handleClickOpen={handleClickOpen}
+                                id={income.id}
+                              />
+                            </ListItemContainer>
+                          )}
+                        </ListItem>
+                      </NewIncomeContainer>
+                    </div>
+                  </Grow>
+                )
+            )}
+          </TransitionGroup>
         </List>
       </div>
       <DeleteDialog

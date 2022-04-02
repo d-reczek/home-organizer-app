@@ -9,7 +9,6 @@ import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { useMediaQuery } from "@mui/material";
 import { FadeComponent } from "../../common/page-wrapper/FadeComponent";
-import { GrowComponent } from "../../common/page-wrapper/GrowComponent";
 const ToDoList = () => {
   //firestore configuration
   //add referneces to collection to-do-list and oredered by timestamp

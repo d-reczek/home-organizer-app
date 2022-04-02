@@ -53,13 +53,25 @@ export const Budget = () => {
 
   const widthEditInput = "90px";
   useEffect(() => {
-    if (userUID) {
-      setUid(userUID);
+    let isMounted = true;
+    if (isMounted) {
+      if (userUID) {
+        setUid(userUID);
+      }
     }
+    return () => {
+      isMounted = false;
+    };
   }, [userUID]);
 
   useEffect(() => {
-    fetchData();
+    let isMounted = true;
+    if (isMounted) {
+      fetchData();
+    }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const fetchData = () => {
@@ -169,25 +181,26 @@ export const Budget = () => {
                 </Typography>
               </GrowComponent2>
             )}
-
-            <Box
-              sx={{
-                fontSize: "30px",
-                padding: "1.5rem",
-                alignSelf: "center",
-                backgroundColor: Theme.palette.backgroundColor.main,
-                textAlign: "center",
-              }}>
-              {chosenMoneyOperations === "expenses" ? (
-                <GrowComponent>
-                  <Box>{`${parseFloat(expensesSum).toFixed(2)} zł`}</Box>
-                </GrowComponent>
-              ) : (
-                <GrowComponent2>
-                  <Box>{`${parseFloat(incomesSum).toFixed(2)} zł`}</Box>
-                </GrowComponent2>
-              )}
-            </Box>
+            <GrowComponent>
+              <Box
+                sx={{
+                  fontSize: "30px",
+                  padding: "1.5rem",
+                  alignSelf: "center",
+                  backgroundColor: Theme.palette.backgroundColor.main,
+                  textAlign: "center",
+                }}>
+                {chosenMoneyOperations === "expenses" ? (
+                  <GrowComponent>
+                    <Box>{`${parseFloat(expensesSum).toFixed(2)} zł`}</Box>
+                  </GrowComponent>
+                ) : (
+                  <GrowComponent2>
+                    <Box>{`${parseFloat(incomesSum).toFixed(2)} zł`}</Box>
+                  </GrowComponent2>
+                )}
+              </Box>
+            </GrowComponent>
           </div>
 
           <div style={{ flexGrow: "2" }}>

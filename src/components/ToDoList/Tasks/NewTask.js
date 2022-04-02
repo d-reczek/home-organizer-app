@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import styled from "styled-components";
-import { OutlinedInput, Typography } from "@mui/material";
+import { Grow, OutlinedInput, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { Theme } from "../../../common/theme/theme";
 import { checkboxClasses } from "@mui/material";
@@ -20,8 +20,7 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
-import { GrowComponent } from "../../../common/page-wrapper/GrowComponent";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import {  TransitionGroup } from "react-transition-group";
 
 const NewTasksContainer = styled.div`
   padding: 10px;
@@ -161,85 +160,87 @@ const NewTask = ({ tasks, db }) => {
           </DialogActions>
         </Dialog>
       </div>
-      {tasks.map(
-        element =>
-          element.uid === uid && (
-            <GrowComponent>
-              <NewTaskContainer key={element.id}>
-                {element.id !== taskID && (
-                  <Typography
+      <TransitionGroup>
+        {tasks.map(
+          element =>
+            element.uid === uid && (
+              <Grow key={element.id} in timeout={1000}>
+                <NewTaskContainer>
+                  {element.id !== taskID && (
+                    <Typography
+                      sx={{
+                        alignSelf: "center",
+                        textDecoration: `${
+                          element.isChecked ? "line-through" : ""
+                        }`,
+                        flexGrow: "1",
+                      }}>
+                      {element.task}
+                    </Typography>
+                  )}
+                  {isEditing && element.id === taskID && (
+                    <OutlinedInput
+                      sx={{
+                        flexGrow: "1",
+                        maxHeight: "2.5rem",
+                        padding: ".25rem",
+                        backgroundColor: Theme.palette.secondary.contrastText,
+                        ":hover": {
+                          backgroundColor: Theme.palette.primary.contrastText,
+                        },
+                      }}
+                      autoFocus
+                      type="text"
+                      value={takenValue}
+                      onChange={e => {
+                        setTakenValue(e.target.value);
+                      }}></OutlinedInput>
+                  )}
+                  <Checkbox
                     sx={{
-                      alignSelf: "center",
-                      textDecoration: `${
-                        element.isChecked ? "line-through" : ""
-                      }`,
-                      flexGrow: "1",
-                    }}>
-                    {element.task}
-                  </Typography>
-                )}
-                {isEditing && element.id === taskID && (
-                  <OutlinedInput
-                    sx={{
-                      flexGrow: "1",
-                      maxHeight: "2.5rem",
-                      padding: ".25rem",
-                      backgroundColor: Theme.palette.secondary.contrastText,
-                      ":hover": {
-                        backgroundColor: Theme.palette.primary.contrastText,
-                      },
-                    }}
-                    autoFocus
-                    type="text"
-                    value={takenValue}
-                    onChange={e => {
-                      setTakenValue(e.target.value);
-                    }}></OutlinedInput>
-                )}
-                <Checkbox
-                  sx={{
-                    marginLeft: "auto",
-                    color: Theme.palette.secondary.contrastText,
-                    ":hover": { color: Theme.palette.primary.contrastText },
-                    justifySelf: "center",
-                    [`&, &.${checkboxClasses.checked}`]: {
+                      marginLeft: "auto",
                       color: Theme.palette.secondary.contrastText,
-                    },
-                    alignSelf: "center",
-                    padding: ".5rem",
-                  }}
-                  checked={element.isChecked ? true : false}
-                  color="secondary"
-                  type="checkbox"
-                  onChange={() => handleIsChecked(element.id)}
-                />
+                      ":hover": { color: Theme.palette.primary.contrastText },
+                      justifySelf: "center",
+                      [`&, &.${checkboxClasses.checked}`]: {
+                        color: Theme.palette.secondary.contrastText,
+                      },
+                      alignSelf: "center",
+                      padding: ".5rem",
+                    }}
+                    checked={element.isChecked ? true : false}
+                    color="secondary"
+                    type="checkbox"
+                    onChange={() => handleIsChecked(element.id)}
+                  />
 
-                {element.id !== taskID && (
-                  <EditButton
-                    handleClickEdit={handleClickEdit}
+                  {element.id !== taskID && (
+                    <EditButton
+                      handleClickEdit={handleClickEdit}
+                      id={element.id}
+                    />
+                  )}
+                  {isEditing && element.id === taskID && (
+                    <CancelButton
+                      handleClickCancel={handleClickCancel}
+                      id={element.id}
+                    />
+                  )}
+                  {element.id === taskID && (
+                    <SaveButton
+                      handleClickSave={handleClickSave}
+                      id={element.id}
+                    />
+                  )}
+                  <DeleteButton
+                    handleClickOpen={handleClickOpen}
                     id={element.id}
                   />
-                )}
-                {isEditing && element.id === taskID && (
-                  <CancelButton
-                    handleClickCancel={handleClickCancel}
-                    id={element.id}
-                  />
-                )}
-                {element.id === taskID && (
-                  <SaveButton
-                    handleClickSave={handleClickSave}
-                    id={element.id}
-                  />
-                )}
-                <DeleteButton
-                  handleClickOpen={handleClickOpen}
-                  id={element.id}
-                />
-              </NewTaskContainer>
-            </GrowComponent>
-          )
-      )}
+                </NewTaskContainer>
+              </Grow>
+            )
+        )}
+      </TransitionGroup>
     </NewTasksContainer>
   );
 };
