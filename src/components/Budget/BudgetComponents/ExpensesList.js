@@ -18,6 +18,7 @@ import { EditButton } from "../../../common/buttons/EditButton";
 import { SaveButton } from "../../../common/buttons/SaveButton";
 import { SelectComponent } from "./SelectComponent";
 import { EditInput } from "./EditInput";
+import { GrowComponent } from "../../../common/page-wrapper/GrowComponent";
 dayjs.locale("pl");
 
 const NewExpenseContainer = styled.div`
@@ -103,69 +104,75 @@ function ExpensesList({ uid, expenses, onDelete, firestore, widthEditInput }) {
             expense =>
               expense.uid === uid && (
                 <div key={expense.id}>
-                  <NewExpenseContainer>
-                    <ListItem className="expenses" key={expense.id}>
-                      {expense.id === editedTaskId ? (
-                        <ListItemContainer>
-                          <EditInput
-                            onChange={handleAmountChange}
-                            value={amountInput}
-                            type="number"
-                            width={widthEditInput}
-                          />
-                          <SelectComponent
-                            handleCategoryChange={handleCategoryChange}
-                            categoryInput={categoryInput}
-                            width="130px">
-                            <MenuItem value="Jedzenie/Napoje">
-                              Jedzenie/Napoje
-                            </MenuItem>
-                            <MenuItem value="Rachunki">Rachunki</MenuItem>
-                            <MenuItem value="Rozrywka">Rozrywka</MenuItem>
-                            <MenuItem value="Zakupy">Zakupy</MenuItem>
-                            <MenuItem value="Transport">Transport</MenuItem>
-                            <MenuItem value="Rodzina">Rodzina</MenuItem>
-                            <MenuItem value="Zwierzęta">Zwierzęta</MenuItem>
-                            <MenuItem value="Podróże">Podróże</MenuItem>
-                            <MenuItem value="Inne">Inne</MenuItem>
-                          </SelectComponent>
-                          <EditInput
-                            onChange={handleDateChange}
-                            value={dateInput}
-                            type="date"
-                            width="170px"
-                          />
-                          <SaveButton
-                            handleClickSave={handleClickSave}
-                            id={expense.id}
-                          />
-                          <CancelButton handleClickCancel={handleClickCancel} />
-                          <DeleteButton
-                            handleClickOpen={handleClickOpen}
-                            id={expense.id}
-                          />
-                        </ListItemContainer>
-                      ) : (
-                        <ListItemContainer>
-                          <ListItemElement>
-                            {parseFloat(expense.amount).toFixed(2)} zł{" "}
-                          </ListItemElement>
-                          <ListItemElement>{expense.category}</ListItemElement>
-                          <ListItemElement>
-                            {dayjs(expense.date).format("D MMMM")}
-                          </ListItemElement>
-                          <EditButton
-                            handleClickEdit={handleClickEdit}
-                            id={expense.id}
-                          />
-                          <DeleteButton
-                            handleClickOpen={handleClickOpen}
-                            id={expense.id}
-                          />
-                        </ListItemContainer>
-                      )}
-                    </ListItem>
-                  </NewExpenseContainer>
+                  <GrowComponent>
+                    <NewExpenseContainer>
+                      <ListItem className="expenses" key={expense.id}>
+                        {expense.id === editedTaskId ? (
+                          <ListItemContainer>
+                            <EditInput
+                              onChange={handleAmountChange}
+                              value={amountInput}
+                              type="number"
+                              width={widthEditInput}
+                            />
+                            <SelectComponent
+                              handleCategoryChange={handleCategoryChange}
+                              categoryInput={categoryInput}
+                              width="130px">
+                              <MenuItem value="Jedzenie/Napoje">
+                                Jedzenie/Napoje
+                              </MenuItem>
+                              <MenuItem value="Rachunki">Rachunki</MenuItem>
+                              <MenuItem value="Rozrywka">Rozrywka</MenuItem>
+                              <MenuItem value="Zakupy">Zakupy</MenuItem>
+                              <MenuItem value="Transport">Transport</MenuItem>
+                              <MenuItem value="Rodzina">Rodzina</MenuItem>
+                              <MenuItem value="Zwierzęta">Zwierzęta</MenuItem>
+                              <MenuItem value="Podróże">Podróże</MenuItem>
+                              <MenuItem value="Inne">Inne</MenuItem>
+                            </SelectComponent>
+                            <EditInput
+                              onChange={handleDateChange}
+                              value={dateInput}
+                              type="date"
+                              width="170px"
+                            />
+                            <SaveButton
+                              handleClickSave={handleClickSave}
+                              id={expense.id}
+                            />
+                            <CancelButton
+                              handleClickCancel={handleClickCancel}
+                            />
+                            <DeleteButton
+                              handleClickOpen={handleClickOpen}
+                              id={expense.id}
+                            />
+                          </ListItemContainer>
+                        ) : (
+                          <ListItemContainer>
+                            <ListItemElement>
+                              {parseFloat(expense.amount).toFixed(2)} zł{" "}
+                            </ListItemElement>
+                            <ListItemElement>
+                              {expense.category}
+                            </ListItemElement>
+                            <ListItemElement>
+                              {dayjs(expense.date).format("D MMMM")}
+                            </ListItemElement>
+                            <EditButton
+                              handleClickEdit={handleClickEdit}
+                              id={expense.id}
+                            />
+                            <DeleteButton
+                              handleClickOpen={handleClickOpen}
+                              id={expense.id}
+                            />
+                          </ListItemContainer>
+                        )}
+                      </ListItem>
+                    </NewExpenseContainer>
+                  </GrowComponent>
                 </div>
               )
           )}

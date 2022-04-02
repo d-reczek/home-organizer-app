@@ -17,6 +17,7 @@ import { CancelButton } from "../../../common/buttons/CancelButton";
 import { SaveButton } from "../../../common/buttons/SaveButton";
 import { EditInput } from "./EditInput";
 import { SelectComponent } from "./SelectComponent";
+import { GrowComponent } from "../../../common/page-wrapper/GrowComponent";
 dayjs.locale("pl");
 
 const NewIncomeContainer = styled.div`
@@ -101,63 +102,67 @@ function IncomesList({ uid, incomes, onDelete, firestore, widthEditInput }) {
             income =>
               income.uid === uid && (
                 <div key={income.id}>
-                  <NewIncomeContainer>
-                    <ListItem className="incomes" key={income.id}>
-                      {income.id === editedTaskId ? (
-                        <ListItemContainer>
-                          <EditInput
-                            onChange={handleAmountChange}
-                            value={amountInput}
-                            type="number"
-                            width={widthEditInput}
-                          />
-                          <SelectComponent
-                            handleCategoryChange={handleCategoryChange}
-                            categoryInput={categoryInput}
-                            width="130px">
-                            <MenuItem value="Wynagrodzenie">
-                              Wynagrodzenie
-                            </MenuItem>
-                            <MenuItem value="Inne">Inne</MenuItem>
-                          </SelectComponent>
-                          <EditInput
-                            onChange={handleDateChange}
-                            value={dateInput}
-                            type="date"
-                            width="170px"
-                          />
+                  <GrowComponent>
+                    <NewIncomeContainer>
+                      <ListItem className="incomes" key={income.id}>
+                        {income.id === editedTaskId ? (
+                          <ListItemContainer>
+                            <EditInput
+                              onChange={handleAmountChange}
+                              value={amountInput}
+                              type="number"
+                              width={widthEditInput}
+                            />
+                            <SelectComponent
+                              handleCategoryChange={handleCategoryChange}
+                              categoryInput={categoryInput}
+                              width="130px">
+                              <MenuItem value="Wynagrodzenie">
+                                Wynagrodzenie
+                              </MenuItem>
+                              <MenuItem value="Inne">Inne</MenuItem>
+                            </SelectComponent>
+                            <EditInput
+                              onChange={handleDateChange}
+                              value={dateInput}
+                              type="date"
+                              width="170px"
+                            />
 
-                          <SaveButton
-                            handleClickSave={handleClickSave}
-                            id={income.id}
-                          />
-                          <CancelButton handleClickCancel={handleClickCancel} />
-                          <DeleteButton
-                            handleClickOpen={handleClickOpen}
-                            id={income.id}
-                          />
-                        </ListItemContainer>
-                      ) : (
-                        <ListItemContainer>
-                          <ListItemElement>
-                            {parseFloat(income.amount).toFixed(2)} zł
-                          </ListItemElement>
-                          <ListItemElement>{income.category}</ListItemElement>
-                          <ListItemElement>
-                            {dayjs(income.date).format("D MMMM")}
-                          </ListItemElement>
-                          <EditButton
-                            handleClickEdit={handleClickEdit}
-                            id={income.id}
-                          />
-                          <DeleteButton
-                            handleClickOpen={handleClickOpen}
-                            id={income.id}
-                          />
-                        </ListItemContainer>
-                      )}
-                    </ListItem>
-                  </NewIncomeContainer>
+                            <SaveButton
+                              handleClickSave={handleClickSave}
+                              id={income.id}
+                            />
+                            <CancelButton
+                              handleClickCancel={handleClickCancel}
+                            />
+                            <DeleteButton
+                              handleClickOpen={handleClickOpen}
+                              id={income.id}
+                            />
+                          </ListItemContainer>
+                        ) : (
+                          <ListItemContainer>
+                            <ListItemElement>
+                              {parseFloat(income.amount).toFixed(2)} zł
+                            </ListItemElement>
+                            <ListItemElement>{income.category}</ListItemElement>
+                            <ListItemElement>
+                              {dayjs(income.date).format("D MMMM")}
+                            </ListItemElement>
+                            <EditButton
+                              handleClickEdit={handleClickEdit}
+                              id={income.id}
+                            />
+                            <DeleteButton
+                              handleClickOpen={handleClickOpen}
+                              id={income.id}
+                            />
+                          </ListItemContainer>
+                        )}
+                      </ListItem>
+                    </NewIncomeContainer>
+                  </GrowComponent>
                 </div>
               )
           )}

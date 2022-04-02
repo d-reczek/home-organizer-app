@@ -7,6 +7,8 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { UserDetails } from "./User/UserDetails";
 import { useMediaQuery } from "@mui/material";
+import { FadeComponent } from "../../common/page-wrapper/FadeComponent";
+import { GrowComponent } from "../../common/page-wrapper/GrowComponent";
 
 export const UserPanel = () => {
   //firestore
@@ -33,20 +35,22 @@ export const UserPanel = () => {
   };
   return (
     <PageWrapper>
-      <Typography
-        variant="h3"
-        sx={{ textAlign: "center", marginBottom: "40px" }}>
-        Panel użytkownika
-      </Typography>
-      <Container
-        maxWidth={maxWidth1000 ? "xl" : "md"}
-        sx={{
-          backgroundColor: Theme.palette.secondary.main,
-          margin: "0 auto",
-          marginTop: "10px",
-        }}>
-        <UserDetails userData={userData} db={db} />
-      </Container>
+      <FadeComponent>
+        <Typography
+          variant="h3"
+          sx={{ textAlign: "center", marginBottom: "40px" }}>
+          Panel użytkownika
+        </Typography>
+        <Container
+          maxWidth={maxWidth1000 ? "xl" : "md"}
+          sx={{
+            backgroundColor: Theme.palette.secondary.main,
+            margin: "0 auto",
+            marginTop: "10px",
+          }}>
+          <UserDetails userData={userData} db={db} />
+        </Container>
+      </FadeComponent>
     </PageWrapper>
   );
 };

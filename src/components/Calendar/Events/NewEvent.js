@@ -26,6 +26,7 @@ import "dayjs/locale/pl";
 import { SaveButton } from "../../../common/buttons/SaveButton";
 import { EditButton } from "../../../common/buttons/EditButton";
 import { DeleteButton } from "../../../common/buttons/DeleteButton";
+import { GrowComponent } from "../../../common/page-wrapper/GrowComponent";
 dayjs.locale("pl");
 
 const NewEventContainer = styled.div`
@@ -204,205 +205,214 @@ const NewEvent = ({ items, setItems, firestore }) => {
       {items.map(
         element =>
           element.uid === uid && (
-            <NewEventContainer key={element.id}>
-              {element.id !== eventID && (
-                <>
-                  <Typography
-                    sx={{
-                      minWidth: "10vw",
-                      alignSelf: "center",
-                      padding: ".5rem",
-                    }}>
-                    {element.name}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      marginLeft: "auto",
-                      alignSelf: "center",
-                      padding: ".5rem",
-                    }}>
-                    {dayjs(element.date).format("D MMMM")}
-                  </Typography>
-                  <Checkbox
-                    sx={{
-                      [`&, &.${checkboxClasses.checked}`]: {
-                        color: Theme.palette.secondary.contrastText,
-                      },
-                      marginLeft: "1vw",
-                      alignSelf: "center",
-                      padding: ".5rem",
-                      cursor: "default",
-                      pointerEvents: "none",
-                    }}
-                    checked={element.alert ? true : false}
-                  />
-                </>
-              )}
-              {isEditing && element.id === eventID && (
-                <>
-                  <Box sx={{ paddingRight: ".5rem" }}>
-                    <OutlinedInput
-                      autoFocus
-                      value={takenName}
+            <GrowComponent>
+              <NewEventContainer key={element.id}>
+                {element.id !== eventID && (
+                  <>
+                    <Typography
                       sx={{
-                        maxHeight: "2.5rem",
-                        padding: ".25rem",
-                        backgroundColor: Theme.palette.secondary.contrastText,
-                        ":hover": {
-                          backgroundColor: Theme.palette.primary.contrastText,
-                        },
-                      }}
-                      onChange={e => {
-                        setTakenName(e.target.value);
-                      }}
-                    />
-                  </Box>
-                  <Box sx={{ padding: "0 1rem 0 .5rem" }}>
-                    <OutlinedInput
-                      type="date"
-                      required
-                      value={takenDate}
+                        minWidth: "10vw",
+                        alignSelf: "center",
+                        padding: ".5rem",
+                      }}>
+                      {element.name}
+                    </Typography>
+                    <Typography
                       sx={{
-                        maxHeight: "2.5rem",
-                        padding: ".25rem",
-                        backgroundColor: Theme.palette.secondary.contrastText,
-                        ":hover": {
-                          backgroundColor: Theme.palette.primary.contrastText,
-                        },
-                      }}
-                      onChange={e => {
-                        setTakenDate(e.target.value);
-                      }}
-                    />
-                  </Box>
-                  <Box>
+                        marginLeft: "auto",
+                        alignSelf: "center",
+                        padding: ".5rem",
+                      }}>
+                      {dayjs(element.date).format("D MMMM")}
+                    </Typography>
                     <Checkbox
-                      checked={isAlerted ? true : false}
                       sx={{
-                        "& .MuiSvgIcon-root": { fontSize: "2.5rem" },
                         [`&, &.${checkboxClasses.checked}`]: {
                           color: Theme.palette.secondary.contrastText,
                         },
-                        margin: 0,
-                        padding: 0,
-                        ":hover": {
-                          color: Theme.palette.primary.contrastText,
-                        },
+                        marginLeft: "1vw",
+                        alignSelf: "center",
+                        padding: ".5rem",
+                        cursor: "default",
+                        pointerEvents: "none",
                       }}
-                      onChange={e => {
-                        setIsAlerted(e.target.checked ? true : false);
-                      }}
+                      checked={element.alert ? true : false}
                     />
-                  </Box>
-                  <Button
-                    sx={{
-                      marginLeft: "auto",
-                      color: Theme.palette.secondary.contrastText,
-                      ":hover": { color: Theme.palette.primary.contrastText },
-                    }}
-                    onClick={() => handleClickCancel(element.id)}>
-                    <Icon>cancel</Icon>
-                  </Button>
-                  <SaveButton handleClickSave={handleClickSave} id={element.id}>
-                    <Icon>save</Icon>
-                  </SaveButton>
-                  <DeleteButton
-                    handleClickOpen={handleClickOpen}
-                    id={element.id}>
-                    <Icon>delete</Icon>
-                  </DeleteButton>
-                </>
-              )}
-              {isEditing && element.id !== eventID && (
-                <>
-                  <EditButton handleClickEdit={handleClickEdit} id={element.id}>
-                    <Icon>edit</Icon>
-                  </EditButton>
-                  <DeleteButton
-                    handleClickOpen={handleClickOpen}
-                    id={element.id}>
-                    <Icon>delete</Icon>
-                  </DeleteButton>
-                </>
-              )}
-              {!isEditing && (
-                <>
-                  <EditButton handleClickEdit={handleClickEdit} id={element.id}>
-                    <Icon>edit</Icon>
-                  </EditButton>
-                  <DeleteButton
-                    handleClickOpen={handleClickOpen}
-                    id={element.id}>
-                    <Icon>delete</Icon>
-                  </DeleteButton>
-                </>
-              )}
-              {element.date === dayjs().format("YYYY-MM-DD") && element.alert && (
-                <>
-                  <Snackbar
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "right",
-                    }}
-                    open={notificationToday}
-                    autoHideDuration={7000}
-                    onClose={handleNotificationTodayClose}
-                    message={`${element.name} - to już dzisiaj! Nie zapomnij!`}
-                    sx={{
-                      "& .MuiSnackbarContent-root": {
+                  </>
+                )}
+                {isEditing && element.id === eventID && (
+                  <>
+                    <Box sx={{ paddingRight: ".5rem" }}>
+                      <OutlinedInput
+                        autoFocus
+                        value={takenName}
+                        sx={{
+                          maxHeight: "2.5rem",
+                          padding: ".25rem",
+                          backgroundColor: Theme.palette.secondary.contrastText,
+                          ":hover": {
+                            backgroundColor: Theme.palette.primary.contrastText,
+                          },
+                        }}
+                        onChange={e => {
+                          setTakenName(e.target.value);
+                        }}
+                      />
+                    </Box>
+                    <Box sx={{ padding: "0 1rem 0 .5rem" }}>
+                      <OutlinedInput
+                        type="date"
+                        required
+                        value={takenDate}
+                        sx={{
+                          maxHeight: "2.5rem",
+                          padding: ".25rem",
+                          backgroundColor: Theme.palette.secondary.contrastText,
+                          ":hover": {
+                            backgroundColor: Theme.palette.primary.contrastText,
+                          },
+                        }}
+                        onChange={e => {
+                          setTakenDate(e.target.value);
+                        }}
+                      />
+                    </Box>
+                    <Box>
+                      <Checkbox
+                        checked={isAlerted ? true : false}
+                        sx={{
+                          "& .MuiSvgIcon-root": { fontSize: "2.5rem" },
+                          [`&, &.${checkboxClasses.checked}`]: {
+                            color: Theme.palette.secondary.contrastText,
+                          },
+                          margin: 0,
+                          padding: 0,
+                          ":hover": {
+                            color: Theme.palette.primary.contrastText,
+                          },
+                        }}
+                        onChange={e => {
+                          setIsAlerted(e.target.checked ? true : false);
+                        }}
+                      />
+                    </Box>
+                    <Button
+                      sx={{
+                        marginLeft: "auto",
                         color: Theme.palette.secondary.contrastText,
-                        background: "#D32F2F",
-                        marginBottom: `${(notificationCounter += 4)}rem`,
-                      },
-                    }}
-                  />
-                </>
-              )}
-              {element.date === dayjs().add(1, "day").format("YYYY-MM-DD") &&
-                element.alert && (
-                  <>
-                    <Snackbar
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
+                        ":hover": { color: Theme.palette.primary.contrastText },
                       }}
-                      open={notificationTomorrow}
-                      autoHideDuration={7000}
-                      onClose={handleNotificationTomorrowClose}
-                      message={`${element.name} - to już jutro! Nie zapomnij!`}
-                      sx={{
-                        "& .MuiSnackbarContent-root": {
-                          color: Theme.palette.secondary.contrastText,
-                          background: "#ED6C02",
-                          marginBottom: `${(notificationCounter += 4)}rem`,
-                        },
-                      }}
-                    />
+                      onClick={() => handleClickCancel(element.id)}>
+                      <Icon>cancel</Icon>
+                    </Button>
+                    <SaveButton
+                      handleClickSave={handleClickSave}
+                      id={element.id}>
+                      <Icon>save</Icon>
+                    </SaveButton>
+                    <DeleteButton
+                      handleClickOpen={handleClickOpen}
+                      id={element.id}>
+                      <Icon>delete</Icon>
+                    </DeleteButton>
                   </>
                 )}
-              {element.date === dayjs().add(2, "day").format("YYYY-MM-DD") &&
-                element.alert && (
+                {isEditing && element.id !== eventID && (
                   <>
-                    <Snackbar
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                      }}
-                      open={notificationAfterTomorrow}
-                      autoHideDuration={7000}
-                      onClose={handleNotificationAfterTomorrowClose}
-                      message={`${element.name} - to za 2 dni! Nie zapomnij!`}
-                      sx={{
-                        "& .MuiSnackbarContent-root": {
-                          color: Theme.palette.secondary.contrastText,
-                          background: "#0288D1",
-                          marginBottom: `${(notificationCounter += 4)}rem`,
-                        },
-                      }}
-                    />
+                    <EditButton
+                      handleClickEdit={handleClickEdit}
+                      id={element.id}>
+                      <Icon>edit</Icon>
+                    </EditButton>
+                    <DeleteButton
+                      handleClickOpen={handleClickOpen}
+                      id={element.id}>
+                      <Icon>delete</Icon>
+                    </DeleteButton>
                   </>
                 )}
-            </NewEventContainer>
+                {!isEditing && (
+                  <>
+                    <EditButton
+                      handleClickEdit={handleClickEdit}
+                      id={element.id}>
+                      <Icon>edit</Icon>
+                    </EditButton>
+                    <DeleteButton
+                      handleClickOpen={handleClickOpen}
+                      id={element.id}>
+                      <Icon>delete</Icon>
+                    </DeleteButton>
+                  </>
+                )}
+                {element.date === dayjs().format("YYYY-MM-DD") &&
+                  element.alert && (
+                    <>
+                      <Snackbar
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        open={notificationToday}
+                        autoHideDuration={7000}
+                        onClose={handleNotificationTodayClose}
+                        message={`${element.name} - to już dzisiaj! Nie zapomnij!`}
+                        sx={{
+                          "& .MuiSnackbarContent-root": {
+                            color: Theme.palette.secondary.contrastText,
+                            background: "#D32F2F",
+                            marginBottom: `${(notificationCounter += 4)}rem`,
+                          },
+                        }}
+                      />
+                    </>
+                  )}
+                {element.date === dayjs().add(1, "day").format("YYYY-MM-DD") &&
+                  element.alert && (
+                    <>
+                      <Snackbar
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        open={notificationTomorrow}
+                        autoHideDuration={7000}
+                        onClose={handleNotificationTomorrowClose}
+                        message={`${element.name} - to już jutro! Nie zapomnij!`}
+                        sx={{
+                          "& .MuiSnackbarContent-root": {
+                            color: Theme.palette.secondary.contrastText,
+                            background: "#ED6C02",
+                            marginBottom: `${(notificationCounter += 4)}rem`,
+                          },
+                        }}
+                      />
+                    </>
+                  )}
+                {element.date === dayjs().add(2, "day").format("YYYY-MM-DD") &&
+                  element.alert && (
+                    <>
+                      <Snackbar
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        open={notificationAfterTomorrow}
+                        autoHideDuration={7000}
+                        onClose={handleNotificationAfterTomorrowClose}
+                        message={`${element.name} - to za 2 dni! Nie zapomnij!`}
+                        sx={{
+                          "& .MuiSnackbarContent-root": {
+                            color: Theme.palette.secondary.contrastText,
+                            background: "#0288D1",
+                            marginBottom: `${(notificationCounter += 4)}rem`,
+                          },
+                        }}
+                      />
+                    </>
+                  )}
+              </NewEventContainer>
+            </GrowComponent>
           )
       )}
     </Box>

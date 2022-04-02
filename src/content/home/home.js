@@ -6,6 +6,8 @@ import { firestore } from "../../firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
+import { FadeComponent } from "../../common/page-wrapper/FadeComponent";
+import { GrowComponent } from "../../common/page-wrapper/GrowComponent";
 export const Home = () => {
   const { user } = useContext(UserContext);
 
