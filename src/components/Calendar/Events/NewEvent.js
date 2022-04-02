@@ -27,7 +27,6 @@ import "dayjs/locale/pl";
 import { SaveButton } from "../../../common/buttons/SaveButton";
 import { EditButton } from "../../../common/buttons/EditButton";
 import { DeleteButton } from "../../../common/buttons/DeleteButton";
-import { GrowComponent } from "../../../common/page-wrapper/GrowComponent";
 import { TransitionGroup } from "react-transition-group";
 
 dayjs.locale("pl");

@@ -5,7 +5,7 @@ import IncomesList from "./BudgetComponents/IncomesList";
 import { useEffect, useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { PageWrapper } from "../../common/page-wrapper/page-wrapper";
-import { Button, Grow } from "@mui/material";
+import { Button } from "@mui/material";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import styled from "styled-components";

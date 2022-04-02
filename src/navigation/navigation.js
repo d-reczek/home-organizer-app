@@ -14,6 +14,7 @@ import styled from "@emotion/styled";
 import { Icon, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
+import { BurgerNavigation } from "./BurgerNavigation";
 const ButtonsContainer = styled.div`
   flex-grow: 1;
   display: flex;
@@ -64,13 +65,6 @@ export const Navigation = () => {
           sx={{ flexDirection: maxWidth1000 ? "column" : "" }}
           disableGutters>
           <IconButton key="icon-button">
-            {/* <Avatar
-              alt="home"
-              variant="square"
-              src={logo}
-              component={Link}
-              to="/"
-            /> */}
             <Button
               sx={{
                 color: Theme.palette.secondary.contrastText,
@@ -102,65 +96,17 @@ export const Navigation = () => {
                   padding: "1px",
                 }}
               />
-              <Button
-                sx={{
-                  margin: "2px",
-                  my: 2,
-                  color: "inherit",
-                  border: `2px solid ${Theme.palette.secondary.main}`,
-                  borderRadius: "0px",
-                  transition: "all",
-                  transitionDuration: "0.3s",
-                  ":hover": {
-                    color: Theme.palette.primary.contrastText,
-                    border: `2px solid ${Theme.palette.primary.contrastText}`,
-                    borderRadius: "none",
-                  },
-                }}
-                component={Link}
-                to="/user-panel">
-                Panel użytkownika
-              </Button>
 
-              <Button
-                sx={{
-                  margin: "2px",
-                  my: 2,
-                  color: "inherit",
-                  border: `2px solid ${Theme.palette.secondary.main}`,
-                  borderRadius: "0px",
-                  transition: "all",
-                  transitionDuration: "0.3s",
-                  ":hover": {
-                    color: Theme.palette.primary.contrastText,
-                    border: `2px solid ${Theme.palette.primary.contrastText}`,
-                    borderRadius: "none",
-                  },
-                }}
-                onClick={handleSignOutClick}>
-                Wyloguj
-              </Button>
+              <NavigationButton to="/user-panel" item="Panel użytkownika" />
+              <NavigationButton
+                to=""
+                item="Wyloguj"
+                handleClick={handleSignOutClick}
+              />
             </ButtonsContainer>
           ) : (
             <ButtonsContainer>
-              <Button
-                sx={{
-                  my: 2,
-                  color: "inherit",
-                  border: `2px solid ${Theme.palette.secondary.main}`,
-                  borderRadius: "0px",
-                  transition: "all",
-                  transitionDuration: "0.4s",
-                  ":hover": {
-                    color: Theme.palette.primary.contrastText,
-                    border: `2px solid ${Theme.palette.primary.contrastText}`,
-                    borderRadius: "none",
-                  },
-                }}
-                component={Link}
-                to="/sign-in">
-                Zaloguj
-              </Button>
+              <NavigationButton to="/sign-in" item="Zaloguj" />
             </ButtonsContainer>
           )}
         </Toolbar>
@@ -181,109 +127,19 @@ export const Navigation = () => {
             transitionDuration: "0.4s",
             ":hover": {
               color: Theme.palette.primary.contrastText,
-              // border: `2px solid ${Theme.palette.primary.contrastText}`,
               borderRadius: "none",
             },
           }}
         />
       </MenuIconContainer>
       {showMenu && (
-        <>
-          <AppBar position="static" theme={Theme} color="secondary">
-            <Container maxWidth="xl">
-              <Toolbar
-                sx={{ flexDirection: maxWidth1000 ? "column" : "" }}
-                disableGutters>
-                <IconButton>
-                  <Button
-                    sx={{
-                      color: Theme.palette.secondary.contrastText,
-                      ":hover": { color: Theme.palette.primary.contrastText },
-                    }}
-                    color="secondary"
-                    alt="home"
-                    variant="square"
-                    component={Link}
-                    to="/">
-                    <Icon>home</Icon>
-                  </Button>
-                </IconButton>
-                {navItems.map(
-                  item =>
-                    user && (
-                      <NavigationButton
-                        key={item.label}
-                        to={item.path}
-                        item={item}
-                      />
-                    )
-                )}
-                {user ? (
-                  <ButtonsContainer>
-                    <Button
-                      sx={{
-                        margin: "2px",
-                        my: 2,
-                        color: "inherit",
-                        border: `2px solid ${Theme.palette.secondary.main}`,
-                        borderRadius: "0px",
-                        transition: "all",
-                        transitionDuration: "0.3s",
-                        ":hover": {
-                          color: Theme.palette.primary.contrastText,
-                          border: `2px solid ${Theme.palette.primary.contrastText}`,
-                          borderRadius: "none",
-                        },
-                      }}
-                      component={Link}
-                      to="/user-panel">
-                      Panel użytkownika
-                    </Button>
-                    <Button
-                      sx={{
-                        margin: "2px",
-                        my: 2,
-                        color: "inherit",
-                        border: `2px solid ${Theme.palette.secondary.main}`,
-                        borderRadius: "0px",
-                        transition: "all",
-                        transitionDuration: "0.3s",
-                        ":hover": {
-                          color: Theme.palette.primary.contrastText,
-                          border: `2px solid ${Theme.palette.primary.contrastText}`,
-                          borderRadius: "none",
-                        },
-                      }}
-                      onClick={handleSignOutClick}>
-                      Wyloguj
-                    </Button>
-                  </ButtonsContainer>
-                ) : (
-                  <ButtonsContainer>
-                    <Button
-                      sx={{
-                        my: 2,
-                        color: "inherit",
-                        border: `2px solid ${Theme.palette.secondary.main}`,
-                        borderRadius: "0px",
-                        transition: "all",
-                        transitionDuration: "0.4s",
-                        ":hover": {
-                          color: Theme.palette.primary.contrastText,
-                          border: `2px solid ${Theme.palette.primary.contrastText}`,
-                          borderRadius: "none",
-                        },
-                      }}
-                      component={Link}
-                      to="/sign-in">
-                      Zaloguj
-                    </Button>
-                  </ButtonsContainer>
-                )}
-              </Toolbar>
-            </Container>
-          </AppBar>
-        </>
+        <BurgerNavigation
+          maxWidth1000={maxWidth1000}
+          navItems={navItems}
+          user={user}
+          ButtonsContainer={ButtonsContainer}
+          handleSignOutClick={handleSignOutClick}
+        />
       )}
     </>
   );

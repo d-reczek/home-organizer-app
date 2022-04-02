@@ -17,7 +17,6 @@ import { CancelButton } from "../../../common/buttons/CancelButton";
 import { SaveButton } from "../../../common/buttons/SaveButton";
 import { EditInput } from "./EditInput";
 import { SelectComponent } from "./SelectComponent";
-import { GrowComponent } from "../../../common/page-wrapper/GrowComponent";
 import { TransitionGroup } from "react-transition-group";
 
 dayjs.locale("pl");
