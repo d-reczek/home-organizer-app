@@ -47,6 +47,7 @@ export const UserPanel = () => {
             backgroundColor: Theme.palette.secondary.main,
             margin: "0 auto",
             marginTop: "10px",
+            p: "0",
           }}>
           <UserDetails userData={userData} db={db} />
         </Container>

@@ -56,8 +56,9 @@ const ToDoList = () => {
             backgroundColor: Theme.palette.secondary.main,
             margin: "0 auto",
             marginTop: "10px",
+            padding: "0",
           }}>
-          <Container>
+          <Container sx={{p: "0"}}>
             <AddTaskForm task={task} setTask={setTask} colRef={colRef} />
             <NewTask tasks={tasks} setTasks={setTasks} db={db} />
           </Container>

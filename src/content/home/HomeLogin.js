@@ -47,7 +47,7 @@ export const HomeLogin = ({
     <PageWrapper title="Home App">
       <FadeComponent>
         <TitleContainer>
-          <Typography variant="h4">
+          <Typography sx={{mb: "20px"}} variant="h4">
             <strong> {`${name} ${surname}  `}</strong> witaj w aplikacji Home
             Organizer!
           </Typography>
@@ -93,7 +93,7 @@ export const HomeLogin = ({
             </BoxContainer>
 
             <BoxContainerDashboard>
-              <Box sx={{ flexGrow: "5", width: "75rem" }}>
+              <Box sx={{ width: "100%" }}>
                 <Box
                   sx={{
                     display: "flex",

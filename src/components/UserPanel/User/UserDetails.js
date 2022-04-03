@@ -173,8 +173,8 @@ export const UserDetails = ({ userData, db }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Container onClick={handleOnClick}>
-      <FormGroup sx={{ margin: "10px", padding: "10px" }}>
+    <Container sx={{ p: "0" }} onClick={handleOnClick}>
+      <FormGroup sx={{ padding: "10px" }}>
         {userData.map(
           element =>
             element.email === email && (

@@ -140,6 +140,7 @@ export const Home = () => {
       surname={surname}
       usersNumber={usersNumber}
       userTasksNumber={userTasksNumber}
+      userEventsNumber={userEventsNumber}
     />
   ) : (
     <Intro
