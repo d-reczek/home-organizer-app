@@ -47,7 +47,7 @@ export const HomeLogin = ({
     <PageWrapper title="Home App">
       <FadeComponent>
         <TitleContainer>
-          <Typography variant="h4">
+          <Typography sx={{mb: "20px"}} variant="h4">
             <strong> {`${name} ${surname}  `}</strong> witaj w aplikacji Home
             Organizer!
           </Typography>

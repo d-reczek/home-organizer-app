@@ -60,7 +60,7 @@ const AddEventForm = ({
 
   return (
     <Box
-      sx={{ backgroundColor: Theme.palette.secondary.main, minWidth: "35vw" }}>
+      sx={{ backgroundColor: Theme.palette.secondary.main, minWidth: "35vw", p: "0px" }}>
       <form onSubmit={handleSubmit}>
         <FormGroup
           sx={{

@@ -25,6 +25,7 @@ const TitleContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  marin-bottom: 20px;
   @media (max-width: 1000px) {
     flex-direction: column;
     align-items: center;
@@ -44,7 +45,6 @@ export const Intro = ({ usersNumber, tasksNumber, eventsNumber }) => {
       <FadeComponent>
         <TitleContainer>
           <Typography variant="h4">
-            {" "}
             Witaj w aplikacji Home Organizer!
           </Typography>
           <Typography sx={{ textAlign: "center" }} variant="h6">

@@ -156,8 +156,7 @@ export const Budget = () => {
             justifyContent: "center",
             gap: "20px",
             backgroundColor: Theme.palette.secondary.main,
-            padding: "30px",
-            margin: "20px",
+            padding: "15px",
             boxSizing: "border-box",
           }}>
           <div

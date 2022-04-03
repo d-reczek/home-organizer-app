@@ -58,8 +58,7 @@ const CalendarList = () => {
           sx={{
             backgroundColor: Theme.palette.secondary.main,
             padding: "20px",
-            // margin: "0 auto",
-            // marginTop: "10px",
+  
           }}>
           <AddEventForm
             item={item}
@@ -70,7 +69,7 @@ const CalendarList = () => {
             setAlert={setAlert}
             docRef={docRef}
           />
-          <Container>
+          <Container sx={{ p: "0" }}>
             <NewEvent items={items} setItems={setItems} firestore={firestore} />
           </Container>
         </Container>
